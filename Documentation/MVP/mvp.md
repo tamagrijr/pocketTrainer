@@ -27,3 +27,5 @@
 
 > ## Follow
   >> Allow users to follow other users to keep up with their stats or follow routines they create
+
+## [Pocket Trainer](https://github.com/tamagrijr/pocketTrainer)
