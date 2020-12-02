@@ -14,6 +14,9 @@
 > ## Search
   >> Allow clients to search for routines from the home screen, and allow trainers to search through workouts when building sessions.
 
+  > ## Staring
+  >> Allow users to start other users and routines
+
 </br>
 
 # Strech Goals
@@ -29,9 +32,6 @@
 
 > ## Follow
   >> Allow users to follow other users to keep up with their stats or follow routines they create
-
-> ## Staring
-  >> Allow users to start other users and routines
 
 # Super Duper Stretch Goals
 
