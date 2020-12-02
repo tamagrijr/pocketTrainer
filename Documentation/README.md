@@ -1,3 +1,3 @@
-# Pocket Trainer
+## [![PocketTrainer](./Pocket.png)](https://github.com/tamagrijr/pocketTrainer)
 
-## [Pocket Trainer](https://github.com/tamagrijr/pocketTrainer)
+# Pocket Trainer

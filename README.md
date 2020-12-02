@@ -1,4 +1,4 @@
-# Pocket Trainer
+## [![PocketTrainer](./Documentation/Pocket.png)](https://github.com/tamagrijr/pocketTrainer)
 
 > "As a user I want to easily share and participate in my passion for exercise by creating workout routines, and logging my completed workout sessions"
 
