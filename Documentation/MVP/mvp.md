@@ -36,5 +36,8 @@
 
 # Super Duper Stretch Goals
 
+> ## Explore React Native
+  >> See about porting the app to mobile, as it was designed with mobile in mind
+
 > ## Remote Workout Buddies
   >> Allow users who are doing the same routine at the same time to hook up with eachother and watch the live progress of each person
