@@ -29,3 +29,8 @@
 
 > ## Follow
   >> Allow users to follow other users to keep up with their stats or follow routines they create
+
+# Super Duper Stretch Goals
+
+> ## Remote Workout Buddies
+  >> Allow users who are doing the same routine at the same time to hook up with eachother and watch the live progress of each person
