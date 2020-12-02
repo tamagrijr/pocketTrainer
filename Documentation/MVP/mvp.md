@@ -30,6 +30,9 @@
 > ## Follow
   >> Allow users to follow other users to keep up with their stats or follow routines they create
 
+> ## Staring
+  >> Allow users to start other users and routines
+
 # Super Duper Stretch Goals
 
 > ## Remote Workout Buddies
