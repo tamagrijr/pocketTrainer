@@ -9,6 +9,13 @@ class User(db.Model, UserMixin):
   username = db.Column(db.String(40), nullable = False, unique = True)
   email = db.Column(db.String(255), nullable = False, unique = True)
   hashed_password = db.Column(db.String(255), nullable = False)
+  avatar = db.Column(db.Text, nullable = True)
+  bio = db.Column(db.Text, nullable = True)
+  insta = db.Column(db.String, nullable = True)
+  faceBook = db.Column(db.String, nullable = True)
+  youTube = db.Column(db.String, nullable = True)
+  created_on = db.Column(db.DateTime, server_default=db.func.now())
+  updated_on = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
 
 
   @property
@@ -29,5 +36,10 @@ class User(db.Model, UserMixin):
     return {
       "id": self.id,
       "username": self.username,
-      "email": self.email
+      "email": self.email,
+      "avatar": self.avatar,
+      "bio": self.bio,
+      "insta": self.insta,
+      "faceBook": self.faceBook,
+      "youTube": self.youTube,
     }
