@@ -9,8 +9,8 @@ from .user_session import UserSession
 from .workout import Workout
 from .exercise import Exercise
 from .user_exercise import UserExercise
-from .user_tag import UserTag
-from .routine_tag import RoutineTag
+from .user_tag import user_tags
+from .routine_tag import routine_tags
 from .upvote import Upvote
 from .user_report import UserReport
 from .follow import Follow

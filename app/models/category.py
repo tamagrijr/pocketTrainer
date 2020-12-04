@@ -8,6 +8,12 @@ class Category(db.Model):
   created_on = db.Column(db.DateTime, server_default=db.func.now())
   updated_on = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
 
+  #RELATIONSHIPS
+  workouts = db.relationship('Workout',
+    back_populates='category'
+  )
+
+
   def to_dict(self):
     return {
       'id': self.id,

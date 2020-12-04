@@ -12,6 +12,15 @@ class UserRoutine(db.Model):
   created_on = db.Column(db.DateTime, server_default=db.func.now())
   updated_on = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
 
+  #RLEATIONSHIPS
+  routine = db.relationship('Routine',
+    back_populates='user_routines'
+  )
+  user = db.relationship('User',
+    back_populates='user_routines'
+  )
+
+
   def to_dict(self):
     return {
       'id': self.id,

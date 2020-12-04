@@ -16,6 +16,18 @@ class Exercise(db.Model):
   created_on = db.Column(db.DateTime, server_default=db.func.now())
   updated_on = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
 
+  #RELATIONSHIPS
+  session = db.relationship('Session',
+    back_populates='exercises'
+  )
+  workout = db.relationship('Workout',
+    back_populates='exercise'
+  )
+  user_exercise = db.relationship('UserExercise',
+    back_populates='exercise'
+  )
+
+
   def to_dict(self):
     return {
       'id': self.id,
@@ -28,4 +40,5 @@ class Exercise(db.Model):
       'rest': self.rest,
       'time': self.time,
       'additionalComments': self.additionalComments,
+      'workout': self.workout.to_dict()
     }

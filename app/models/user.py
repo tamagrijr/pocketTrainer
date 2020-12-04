@@ -1,6 +1,8 @@
 from .db import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from .follow import Follow
+from .user_tag import user_tags
 
 class User(db.Model, UserMixin):
   __tablename__ = 'users'
@@ -16,6 +18,41 @@ class User(db.Model, UserMixin):
   youTube = db.Column(db.String, nullable = True)
   created_on = db.Column(db.DateTime, server_default=db.func.now())
   updated_on = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
+
+  #RELATIONSHIPS
+  followers = db.relationship('Follow',
+    foreign_keys=[Follow.followingId],
+    back_populates='user_followers'
+  )
+  following = db.relationship('Follow',
+    foreign_keys=[Follow.followerId],
+    back_populates='user_following'
+  )
+  upvotes = db.relationship('Upvote',
+    back_populates='user'
+  )
+  workouts = db.relationship('Workout',
+    back_populates='user'
+  )
+  tags = db.relationship('Tag',
+    secondary=user_tags,
+    back_populates='user'
+  )
+  routines = db.relationship('Routine',
+    back_populates='user'
+  )
+  reports = db.relationship('UserReport',
+    back_populates='user'
+  )
+  user_routines = db.relationship('UserRoutine',
+    back_populates='user'
+  )
+  user_sessions = db.relationship('UserSession',
+    back_populates='user'
+  )
+  user_exercises = db.relationship('UserExercise',
+    back_populates='user'
+  )
 
 
   @property
@@ -42,4 +79,11 @@ class User(db.Model, UserMixin):
       "insta": self.insta,
       "faceBook": self.faceBook,
       "youTube": self.youTube,
+      "followers": [follower.to_dict() for follower in self.followers],
+      "following": [following.to_dict() for following in self.following],
+      "upvotes": [upvotes.to_dict() for upvotes in self.upvotes],
+      "workouts": [workout.to_dict() for workout in self.workouts],
+      "tags": [tag.to_dict() for tag in self.tags],
+      "routines": [routine.to_dict() for routine in self.routines],
+      "user_routines": [routine.to_dict() for routine in self.user_routines]
     }

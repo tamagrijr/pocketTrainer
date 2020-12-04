@@ -15,6 +15,24 @@ class Workout(db.Model):
   created_on = db.Column(db.DateTime, server_default=db.func.now())
   updated_on = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
 
+  #RELATIONSHIPS
+  upvotes = db.relationship('Upvote',
+    back_populates='workout'
+  )
+  user = db.relationship('User',
+    back_populates='workouts'
+  )
+  category = db.relationship('Category',
+    back_populates='workouts'
+  )
+  reports = db.relationship('UserReport',
+    back_populates='workout'
+  )
+  exercise = db.relationship('Exercise',
+    back_populates='workout'
+  )
+
+
   def to_dict(self):
     return {
       'id': self.id,
@@ -26,4 +44,5 @@ class Workout(db.Model):
       'approved': self.approved,
       'public': self.public,
       'reported': self.reported,
+      'category': self.category.to_dict()
     }

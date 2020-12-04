@@ -9,9 +9,20 @@ class Follow(db.Model):
   created_on = db.Column(db.DateTime, server_default=db.func.now())
   updated_on = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
 
+  #RELATIONSHIPS
+  user_followers = db.relationship('User',
+    foreign_keys=[followerId],
+    back_populates='followers'
+  )
+  user_following = db.relationship('User',
+    foreign_keys=[followingId],
+    back_populates='following'
+  )
+
+
   def to_dict(self):
     return {
       'id': self.id,
-      'follwerId': self.followerId,
+      'followerId': self.followerId,
       'followingId': self.followingId,
     }

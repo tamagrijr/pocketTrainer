@@ -10,10 +10,23 @@ class Session(db.Model):
   created_on = db.Column(db.DateTime, server_default=db.func.now())
   updated_on = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
 
+  #RELATIONSHIPS
+  routine = db.relationship('Routine',
+    back_populates='sessions'
+  )
+  user_sessions = db.relationship('UserSession',
+    back_populates='session'
+  )
+  exercises = db.relationship('Exercise',
+    back_populates='session'
+  )
+
+
   def to_dict(self):
     return {
       'id': self.id,
       'routineId': self.routineId,
       'name': self.name,
       'description': self.description,
+      'exercises': [exercise.to_dict() for exercise in self.exercises]
     }

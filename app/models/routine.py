@@ -1,4 +1,5 @@
 from .db import db
+from .routine_tag import routine_tags
 
 class Routine(db.Model):
   __tablename__ = "routines"
@@ -12,6 +13,28 @@ class Routine(db.Model):
   created_on = db.Column(db.DateTime, server_default=db.func.now())
   updated_on = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
 
+  #RELATIONSHIPS
+  upvotes = db.relationship('Upvote',
+    back_populates='routine'
+  )
+  tags = db.relationship('Tag',
+    secondary=routine_tags,
+    back_populates='routine'
+  )
+  user = db.relationship('User',
+    back_populates='routines'
+  )
+  reports = db.relationship('UserReport',
+    back_populates='routine'
+  )
+  user_routines = db.relationship('UserRoutine',
+    back_populates='routine'
+  )
+  sessions = db.relationship('Session',
+    back_populates='routine'
+  )
+
+
   def to_dict(self):
     return {
       'id': self.id,
@@ -20,4 +43,6 @@ class Routine(db.Model):
       'description': self.description,
       'public': self.public,
       'reported': self.reported,
+      'tags': [tag.to_dict() for tag in self.tags],
+      'sessions': [session.to_dict() for session in self.sessions]
     }
