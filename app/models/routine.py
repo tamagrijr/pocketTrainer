@@ -46,3 +46,15 @@ class Routine(db.Model):
       'tags': [tag.to_dict() for tag in self.tags],
       'sessions': [session.to_dict() for session in self.sessions]
     }
+
+
+  def short_dict(self):
+    return {
+      'id': self.id,
+      'userId': self.userId,
+      'name': self.name,
+      'description': self.description,
+      'public': self.public,
+      'tags': [tag.to_dict() for tag in self.tags],
+      'reported': self.reported,
+    }

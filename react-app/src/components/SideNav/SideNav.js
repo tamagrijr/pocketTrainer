@@ -8,23 +8,25 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { logout } from '../../services/auth'
+import { GiWeightLiftingUp, GiHeartBeats, GiBiceps } from "react-icons/gi";
+import './SideNav.css'
 
 
 const useStyles = makeStyles({
   list: {
     width: 250,
+    color: 'rgb(66,175,255)'
   },
   fullList: {
     width: 'auto',
   },
 });
 
-export default function SideNav({ setAuthenticated }) {
+export default function SideNav({ setAuthenticated, handleProfile }) {
   const classes = useStyles();
   const [state, setState] = React.useState({
     top: false,
@@ -57,15 +59,15 @@ export default function SideNav({ setAuthenticated }) {
     >
       <List>
         <ListItem button onClick={() => window.location.href='/routines'}>
-          <ListItemIcon> <InboxIcon /> </ListItemIcon>
+          <ListItemIcon> <GiHeartBeats /> </ListItemIcon>
           <ListItemText primary={'My Routines'} />
         </ListItem>
         <ListItem button onClick={() => window.location.href='/workouts'}>
-          <ListItemIcon> <InboxIcon /> </ListItemIcon>
+          <ListItemIcon> <GiWeightLiftingUp /> </ListItemIcon>
           <ListItemText primary={'My Workouts'} />
         </ListItem>
-        <ListItem button onClick={() => window.location.href='/profile'}>
-          <ListItemIcon> <InboxIcon /> </ListItemIcon>
+        <ListItem button onClick={handleProfile}>
+          <ListItemIcon> <GiBiceps /> </ListItemIcon>
           <ListItemText primary={'My Profile'} />
         </ListItem>
       </List>
@@ -92,6 +94,7 @@ export default function SideNav({ setAuthenticated }) {
       </IconButton>
       <SwipeableDrawer
         anchor={'left'}
+        className={classes.drawer}
         open={state['left']}
         onClose={toggleDrawer('left', false)}
         onOpen={toggleDrawer('left', true)}
