@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { login } from "../../services/auth";
 
-const LoginForm = ({ authenticated, setAuthenticated }) => {
+const LoginForm = ({ authenticated, setAuthenticated, setLogin }) => {
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -56,6 +56,7 @@ const LoginForm = ({ authenticated, setAuthenticated }) => {
           onChange={updatePassword}
         />
         <button type="submit">Login</button>
+        <button onClick={() => setLogin(false)}>Sign Up</button>
       </div>
     </form>
   );

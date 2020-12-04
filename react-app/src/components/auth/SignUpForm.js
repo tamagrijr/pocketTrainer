@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Redirect } from 'react-router-dom';
 import { signUp } from '../../services/auth';
 
-const SignUpForm = ({authenticated, setAuthenticated}) => {
+const SignUpForm = ({authenticated, setAuthenticated, setLogin}) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -78,6 +78,7 @@ const SignUpForm = ({authenticated, setAuthenticated}) => {
         ></input>
       </div>
       <button type="submit">Sign Up</button>
+      <button onClick={() => setLogin(true)}>Sign in</button>
     </form>
   );
 };
