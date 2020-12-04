@@ -73,6 +73,7 @@ const SignUpForm = ({authenticated, setAuthenticated, setLogin}) => {
         <Grid item>
           <TextField
             className={classes.inputs}
+            inputProps={{ style: {textAlign: 'center'} }}
             name="username"
             type="text"
             value={username}
@@ -85,6 +86,7 @@ const SignUpForm = ({authenticated, setAuthenticated, setLogin}) => {
         <Grid item>
           <TextField
             className={classes.inputs}
+            inputProps={{ style: {textAlign: 'center'} }}
             name="email"
             type="email"
             value={email}
@@ -97,6 +99,7 @@ const SignUpForm = ({authenticated, setAuthenticated, setLogin}) => {
         <Grid item>
           <TextField
             className={classes.inputs}
+            inputProps={{ style: {textAlign: 'center'} }}
             name="password"
             type="password"
             value={password}
@@ -109,6 +112,7 @@ const SignUpForm = ({authenticated, setAuthenticated, setLogin}) => {
         <Grid item>
           <TextField
             className={classes.inputs}
+            inputProps={{ style: {textAlign: 'center'} }}
             name="repeat_password"
             type="password"
             value={repeatPassword}

@@ -62,6 +62,7 @@ const LoginForm = ({ authenticated, setAuthenticated, setLogin }) => {
         <Grid item>
           <TextField
             className={classes.inputs}
+            inputProps={{ style: {textAlign: 'center'} }}
             name="email"
             type="text"
             value={email}
@@ -74,6 +75,7 @@ const LoginForm = ({ authenticated, setAuthenticated, setLogin }) => {
         <Grid item>
           <TextField
             className={classes.inputs}
+            inputProps={{ style: {textAlign: 'center'} }}
             name="password"
             type="password"
             value={password}

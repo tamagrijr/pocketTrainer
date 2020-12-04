@@ -8,6 +8,7 @@ import UsersList from "./components/UsersList";
 import User from "./components/User";
 import { authenticate } from "./services/auth";
 import LandingContainer from './components/landing/LandingContainer'
+import TopNavContainer from './components/TopNav/TopNavContainer'
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -35,9 +36,11 @@ function App() {
           setAuthenticated={setAuthenticated}
         />
       </Route>
-      <ProtectedRoute path="/" exact={true} authenticated={authenticated}>
-        <NavBar setAuthenticated={setAuthenticated} />
-        <h1>My Home Page</h1>
+      <ProtectedRoute path="/" authenticated={authenticated}>
+        <TopNavContainer setAuthenticated={setAuthenticated} />
+        <ProtectedRoute path='/profile' exact={true} authenticated={authenticated} >
+          <h1>My Home Page</h1>
+        </ProtectedRoute>
       </ProtectedRoute>
     </BrowserRouter>
   );
