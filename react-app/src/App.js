@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Route } from "react-router-dom";
-import LoginForm from "./components/auth/LoginForm";
-import SignUpForm from "./components/auth/SignUpForm";
-import NavBar from "./components/NavBar";
+import { BrowserRouter, Route, Redirect } from "react-router-dom";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
-import UsersList from "./components/UsersList";
-import User from "./components/User";
 import { authenticate } from "./services/auth";
 import LandingContainer from './components/landing/LandingContainer'
 import TopNavContainer from './components/TopNav/TopNavContainer'
@@ -39,7 +34,13 @@ function App() {
       <ProtectedRoute path="/" authenticated={authenticated}>
         <TopNavContainer setAuthenticated={setAuthenticated} />
         <ProtectedRoute path='/profile' exact={true} authenticated={authenticated} >
-          <h1>My Home Page</h1>
+          <h1 style={{ textAlign: 'center' }}>My Profile</h1>
+        </ProtectedRoute>
+        <ProtectedRoute path='/routines' exact={true} authenticated={authenticated} >
+          <h1 style={{ textAlign: 'center' }}>My Routines</h1>
+        </ProtectedRoute>
+        <ProtectedRoute path='/workouts' exact={true} authenticated={authenticated} >
+          <h1 style={{ textAlign: 'center' }}>My Workouts</h1>
         </ProtectedRoute>
       </ProtectedRoute>
     </BrowserRouter>
@@ -47,13 +48,3 @@ function App() {
 }
 
 export default App;
-
-{/* <Route path="/sign-up" exact={true}>
-        <SignUpForm authenticated={authenticated} setAuthenticated={setAuthenticated} />
-      </Route>
-      <ProtectedRoute path="/users" exact={true} authenticated={authenticated}>
-        <UsersList/>
-      </ProtectedRoute>
-      <ProtectedRoute path="/users/:userId" exact={true} authenticated={authenticated}>
-        <User />
-      </ProtectedRoute> */}

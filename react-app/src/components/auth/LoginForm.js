@@ -49,7 +49,7 @@ const LoginForm = ({ authenticated, setAuthenticated, setLogin }) => {
   };
 
   if (authenticated) {
-    return <Redirect to="/" />;
+    return <Redirect to="/routines" />;
   }
 
   return (

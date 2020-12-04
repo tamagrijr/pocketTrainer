@@ -56,12 +56,18 @@ export default function SideNav({ setAuthenticated }) {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        <ListItem button onClick={() => window.location.href='/routines'}>
+          <ListItemIcon> <InboxIcon /> </ListItemIcon>
+          <ListItemText primary={'My Routines'} />
+        </ListItem>
+        <ListItem button onClick={() => window.location.href='/workouts'}>
+          <ListItemIcon> <InboxIcon /> </ListItemIcon>
+          <ListItemText primary={'My Workouts'} />
+        </ListItem>
+        <ListItem button onClick={() => window.location.href='/profile'}>
+          <ListItemIcon> <InboxIcon /> </ListItemIcon>
+          <ListItemText primary={'My Profile'} />
+        </ListItem>
       </List>
       <Divider />
       <List>

@@ -60,7 +60,7 @@ const SignUpForm = ({authenticated, setAuthenticated, setLogin}) => {
   };
 
   if (authenticated) {
-    return <Redirect to="/" />;
+    return <Redirect to="/profile" />;
   }
 
   return (
