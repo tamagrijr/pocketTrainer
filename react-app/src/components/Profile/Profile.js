@@ -9,6 +9,7 @@ import Divider from '@material-ui/core/Divider';
 import RoutineCardContainer from '../RoutineCard/RoutineCardContainer'
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
+import EditProfileModal from '../EditProfileModal/EditProfileModal'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,10 +70,19 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Profile({ currentProfile, currentUserId }) {
   const classes = useStyles();
+  const [editProfile, setEditProfile] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setEditProfile(true);
+  };
+
+  const handleClose = () => {
+    setEditProfile(false);
+  };
 
   return (
     <>
-
+      <EditProfileModal open={editProfile} handleClose={handleClose} currentProfile={currentProfile}/>
       <Grid item>
         <Grid container wrap='nowrap' spacing={3} alignItems='center'>
           <Grid item>
@@ -87,7 +97,7 @@ export default function Profile({ currentProfile, currentUserId }) {
           </Grid>
           { currentProfile.id === currentUserId ?
             <Grid item>
-              <IconButton><EditIcon /></IconButton>
+              <IconButton onClick={handleClickOpen}><EditIcon /></IconButton>
             </Grid> :
             <></>
           }
