@@ -10,6 +10,7 @@ import RoutineCardContainer from '../RoutineCard/RoutineCardContainer'
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import EditProfileModal from '../EditProfileModal/EditProfileModal'
+import Button from '@material-ui/core/Button'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,6 +82,14 @@ export default function Profile({ currentProfile, currentUserId }) {
     setEditProfile(false);
   };
 
+  const following = () => {
+    let following = false;
+    currentProfile.followers.forEach(follower => {
+      if(follower.id === currentUserId) following = true;
+    })
+    return following
+  }
+  console.log(following())
   return (
     <>
       <EditProfileModal open={editProfile} handleClose={handleClose} currentProfile={currentProfile} currentUserId={currentUserId} />
@@ -100,7 +109,9 @@ export default function Profile({ currentProfile, currentUserId }) {
             <Grid item>
               <IconButton onClick={handleClickOpen}><EditIcon /></IconButton>
             </Grid> :
-            <></>
+            following() ?
+            <Button size='small' color='secondary'>Unfollow</Button> :
+            <Button size='small' color='primary'>Follow</Button>
           }
         </Grid>
       </Grid>
