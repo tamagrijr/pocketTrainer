@@ -5,7 +5,7 @@ export const setUserWorkouts = (workouts) => {
 };
 
 export const fetchUserWorkouts = async (id) => {
-  const response = await fetch(`/api/workouts/user/${id}`, {
+  const response = await fetch(`/api/workouts/user/${id}/get`, {
     headers: {
       "Content-Type": "application/json",
     },
