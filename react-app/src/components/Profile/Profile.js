@@ -1,9 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from "@material-ui/core/Avatar";
-import './Profile.css'
 import { FiFacebook, FiYoutube, FiInstagram } from "react-icons/fi";
 import Divider from '@material-ui/core/Divider';
 import RoutineCardContainer from '../RoutineCard/RoutineCardContainer'
@@ -11,6 +10,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import EditProfileModal from '../EditProfileModal/EditProfileModal'
 import Button from '@material-ui/core/Button'
+import FollowersModal from '../FollowersModal/FollowersModal'
+import './Profile.css'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -74,14 +75,21 @@ const useStyles = makeStyles((theme) => ({
 export default function Profile({ currentProfile, currentUserId, dispatchProfile }) {
   const classes = useStyles();
   const [editProfile, setEditProfile] = React.useState(false);
+  const [followerList, setFollowerList] = React.useState(false);
+  const [followingList, setFollowingList] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setEditProfile(true);
-  };
+  const handleEditOpen = () => setEditProfile(true);
+  const handleFollowerOpen = () => setFollowerList(true);
+  const handleFollowingOpen = () => setFollowingList(true);
+  const handleEditClose = () => setEditProfile(false);
+  const handleFollowerClose = () => setFollowerList(false);
+  const handleFollowingClose = () => setFollowingList(false);
 
-  const handleClose = () => {
-    setEditProfile(false);
-  };
+  useEffect(() => {
+    (async () => {
+      dispatchProfile()
+    })();
+  }, [handleFollowingClose, handleFollowerClose]);
 
   const following = () => {
     let following = false;
@@ -114,28 +122,39 @@ export default function Profile({ currentProfile, currentUserId, dispatchProfile
 
   return (
     <>
-      <EditProfileModal open={editProfile} handleClose={handleClose} currentProfile={currentProfile} currentUserId={currentUserId} />
+      <FollowersModal open={followerList} handleClose={handleFollowerClose} followers={currentProfile.followers} title={'Followers'} />
+      <FollowersModal open={followingList} handleClose={handleFollowingClose} followers={currentProfile.following} title={'Following'} />
+      <EditProfileModal open={editProfile} handleClose={handleEditClose} currentProfile={currentProfile} currentUserId={currentUserId} />
+
       <Grid item>
-        <Grid container wrap='nowrap' spacing={3} alignItems='center'>
+        <Grid container wrap='nowrap' spacing={3} alignItems='center' justify='center' alignContent='center'>
           <Grid item>
             <Avatar aria-label="avatar" className={classes.avatar} src={currentProfile.avatar ? currentProfile.avatar : ""}>
               {currentProfile.avatar ? "" : currentProfile.username.slice(0, 1)}
             </Avatar>
           </Grid>
           <Grid item>
-            <Typography variant='h3'>
+            <Typography variant='h4'>
               {currentProfile.username}
             </Typography>
           </Grid>
           {currentProfile.id === currentUserId ?
             <Grid item>
-              <IconButton onClick={handleClickOpen}><EditIcon /></IconButton>
+              <IconButton onClick={handleEditOpen}><EditIcon /></IconButton>
             </Grid> :
-            following() ?
-              <Button size='small' color='primary' onClick={handleUnfollow}>Unfollow</Button> :
-              <Button size='small' color='secondary' onClick={handleFollow}>Follow</Button>
+            <></>
           }
         </Grid>
+      </Grid>
+
+      <Grid item>
+        { currentProfile.id === currentUserId ?
+          <></> :
+          following() ?
+          <Button size='small' color='primary' onClick={handleUnfollow}>Unfollow</Button> :
+          <Button size='small' color='secondary' onClick={handleFollow}>Follow</Button>
+
+        }
       </Grid>
 
       <Grid item>
@@ -160,7 +179,7 @@ export default function Profile({ currentProfile, currentUserId, dispatchProfile
 
       <Grid item>
         <Grid container wrap='nowrap' spacing={3}>
-          <Grid item className={classes.followerContainer} onClick={() => alert('follower test')}>
+          <Grid item className={classes.followerContainer} onClick={handleFollowerOpen}>
             <Typography variant='subtitle1' align='center'>
               {currentProfile.followers.length}
             </Typography>
@@ -168,7 +187,7 @@ export default function Profile({ currentProfile, currentUserId, dispatchProfile
               Followers
             </Typography>
           </Grid>
-          <Grid item className={classes.followerContainer} onClick={() => alert('following test')}>
+          <Grid item className={classes.followerContainer} onClick={handleFollowingOpen}>
             <Typography variant='subtitle1' align='center'>
               {currentProfile.following.length}
             </Typography>
@@ -186,7 +205,7 @@ export default function Profile({ currentProfile, currentUserId, dispatchProfile
       </Grid>
 
       <Grid item className={classes.routineContainer}>
-        <Typography variant='h3' style={{ textAlign: 'center' }}>Routines</Typography>
+        <Typography variant='h4' style={{ textAlign: 'center' }}>Routines</Typography>
         <Divider className={classes.divider} />
         {currentProfile.id === currentUserId ?
           currentProfile.routines.map(routine => {

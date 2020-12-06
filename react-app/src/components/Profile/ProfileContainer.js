@@ -9,7 +9,7 @@ import { fetchCurrentProfile, setCurrentProfile } from '../../store/profile'
 export default function ProfileContainer({ id }) {
   const dispatch = useDispatch();
   const { userId } = useParams();
-  const currentProfileId = id || userId;
+  const currentProfileId = userId || id;
 
   useEffect(() => {
     (async () => {
