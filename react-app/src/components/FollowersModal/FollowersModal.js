@@ -25,7 +25,7 @@ export default function FollowersModal({ open, handleClose, followers, title }) 
       <DialogTitle id="follower title">{title}</DialogTitle>
       <List>
         {followers.map((follower) => (
-          <Link to={`/profile/${follower.id}`} style={{textDecoration: 'none', color: 'white'}} >
+          <Link key={follower.id} to={`/profile/${follower.id}`} style={{textDecoration: 'none', color: 'white'}} >
             <ListItem button key={follower.id} onClick={handleClose}>
               <ListItemAvatar>
                 <Avatar aria-label="avatar" className={classes.avatar} src={follower.avatar ? follower.avatar : ""}>
