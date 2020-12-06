@@ -13,6 +13,7 @@ function App() {
   const dispatch = useDispatch();
   const [authenticated, setAuthenticated] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const currentUserId = useSelector((state) => state.user.id);
 
   useEffect(() => {
     (async () => {
@@ -20,8 +21,6 @@ function App() {
       if (!user.errors) {
         setAuthenticated(true);
         dispatch(setCurrentUser(user.id))
-        const currentProfile = await fetchCurrentProfile(user.id)
-        dispatch(setCurrentProfile(currentProfile))
       }
       setLoaded(true);
     })();
@@ -41,7 +40,7 @@ function App() {
         <TopNavContainer setAuthenticated={setAuthenticated} />
 
         <ProtectedRoute path='/profile' exact={true} authenticated={authenticated} >
-          <ProfileContainer />
+          <ProfileContainer id={currentUserId} />
         </ProtectedRoute>
 
         <ProtectedRoute path='/routines' exact={true} authenticated={authenticated} >
@@ -50,6 +49,10 @@ function App() {
 
         <ProtectedRoute path='/workouts' exact={true} authenticated={authenticated} >
           <h1 style={{ textAlign: 'center' }}>My Workouts</h1>
+        </ProtectedRoute>
+
+        <ProtectedRoute path='/profile/:userId' exact={true} authenticated={authenticated} >
+          <ProfileContainer />
         </ProtectedRoute>
 
       </ProtectedRoute>

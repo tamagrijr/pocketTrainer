@@ -71,14 +71,7 @@ export default function TopNav({ setAuthenticated }) {
         <Toolbar>
           <SideNavContainer setAuthenticated={setAuthenticated} />
           <Typography className={classes.title} variant="h6" noWrap>
-            { window.location.pathname === '/profile' ?
-              'My Pofile' :
-              window.location.pathname === '/routines' ?
-              'My Routines' :
-              window.location.pathname === '/workouts' ?
-              'My Workouts' :
-              'Pocket Trainer'
-            }
+            Pocket Trainer
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>

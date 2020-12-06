@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
@@ -26,8 +27,10 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SideNav({ setAuthenticated, handleProfile }) {
+
+export default function SideNav({ setAuthenticated }) {
   const classes = useStyles();
+
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -58,18 +61,24 @@ export default function SideNav({ setAuthenticated, handleProfile }) {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        <ListItem button onClick={() => window.location.href='/routines'}>
-          <ListItemIcon> <GiHeartBeats /> </ListItemIcon>
-          <ListItemText primary={'My Routines'} />
-        </ListItem>
-        <ListItem button onClick={() => window.location.href='/workouts'}>
-          <ListItemIcon> <GiWeightLiftingUp /> </ListItemIcon>
-          <ListItemText primary={'My Workouts'} />
-        </ListItem>
-        <ListItem button onClick={handleProfile}>
-          <ListItemIcon> <GiBiceps /> </ListItemIcon>
-          <ListItemText primary={'My Profile'} />
-        </ListItem>
+        <Link to='/routines' style={{ textDecoration: 'none', color: '#42AFFF' }}>
+          <ListItem button>
+            <ListItemIcon> <GiHeartBeats /> </ListItemIcon>
+            <ListItemText primary={'My Routines'} />
+          </ListItem>
+        </Link>
+        <Link to='/workouts' style={{ textDecoration: 'none', color: '#42AFFF' }}>
+          <ListItem button>
+            <ListItemIcon> <GiWeightLiftingUp /> </ListItemIcon>
+            <ListItemText primary={'My Workouts'} />
+          </ListItem>
+        </Link>
+        <Link to='/profile' style={{ textDecoration: 'none', color: '#42AFFF' }}>
+          <ListItem button>
+            <ListItemIcon> <GiBiceps /> </ListItemIcon>
+            <ListItemText primary={'My Profile'} />
+          </ListItem>
+        </Link>
       </List>
       <Divider />
       <List>

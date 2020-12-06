@@ -14,6 +14,7 @@ import StarRateIcon from '@material-ui/icons/StarRate';
 const useStyles = makeStyles({
   root: {
     maxWidth: '20em',
+    margin: '1em 0',
   },
   stared: {
     color: '#FFE031',
