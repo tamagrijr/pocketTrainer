@@ -21,7 +21,7 @@ export default function MyWorkoutsContainer() {
     <Grid container justify='center' direction='column'
       wrap='nowrap' alignContent='center' alignItems='center'
       spacing={4} style={{ marginTop: '2em' }}>
-      <MyWorkouts userWorkouts={userWorkouts} />
+      <MyWorkouts userWorkouts={userWorkouts} currentUserId={currentUserId} />
     </Grid>
   )
 }

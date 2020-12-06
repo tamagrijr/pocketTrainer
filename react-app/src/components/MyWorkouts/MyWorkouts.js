@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Button from '@material-ui/core/Button'
+import WorkoutModal from '../WorkoutModal/WorkoutModal'
 
 const useStyles = makeStyles((theme) => ({
   divider: {
@@ -13,10 +14,42 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function MyWorkouts({userWorkouts}) {
+export default function MyWorkouts({ userWorkouts, currentUserId }) {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+  const [workoutId, setWorkoutId] = React.useState('');
+  const [categoryId, setCategoryId] = React.useState('');
+  const [name, setName] = React.useState('');
+  const [description, setDescription] = React.useState('');
+  const [exampleLink, setExampleLink] = React.useState('');
+  const [privacy, setPrivacy] = React.useState('');
+  const [method, setMethod] = React.useState('');
 
-  if(!userWorkouts) return null
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const createWorkout = () => {
+    setMethod('POST');
+    setWorkoutId('')
+    setCategoryId('')
+    setName('')
+    setDescription('')
+    setExampleLink('')
+    setPrivacy(false)
+    handleOpen();
+  }
+  const updateWorkout = (workout) => {
+    setMethod('PUT');
+    setWorkoutId(workout.id)
+    setCategoryId(workout.category.id)
+    setName(workout.name)
+    setDescription(workout.description)
+    setExampleLink(workout.exampleLink)
+    setPrivacy(workout.public)
+    handleOpen();
+  }
+
+  if (!userWorkouts) return null
   return (
     <>
       <Grid item>
@@ -26,16 +59,25 @@ export default function MyWorkouts({userWorkouts}) {
         <Divider className={classes.divider} />
       </Grid>
       { userWorkouts.map(workout => {
-        return(
+        return (
           <Grid item key={workout.id}>
-            <Typography>{workout.name}</Typography>
+            <Grid container wrap='nowrap' spacing={3}>
+              <Grid item>
+                <Button onClick={() => updateWorkout(workout) }><Typography>{workout.name}</Typography></Button>
+              </Grid>
+              <Grid item>
+                <Button><Typography color='secondary'>{workout.category.name}</Typography></Button>
+              </Grid>
+            </Grid>
+            <Divider className={classes.divider}/>
+            <Typography>{workout.description}</Typography>
           </Grid>
         )
       })}
       <Grid item>
-        <Button>
+        <Button onClick={createWorkout}>
           <Typography>Create Workout</Typography>
-          <AddCircleIcon color='secondary' style={{marginLeft: '1em'}} />
+          <AddCircleIcon color='secondary' style={{ marginLeft: '1em' }} />
         </Button>
       </Grid>
     </>
