@@ -1,6 +1,6 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from flask_login import login_required
-from app.models import User
+from app.models import User, db
 
 user_routes = Blueprint('users', __name__)
 
@@ -23,4 +23,21 @@ def user(id):
 # @login_required
 def profile_info(id):
     user = User.query.get(id)
+    return user.profile_info()
+
+
+@user_routes.route('/<int:id>/edit_profile', methods=['GET', 'PUT'])
+# @login_required
+def edit_profile(id):
+    user = User.query.get(id)
+    req_data = request.get_json()
+    user.username = req_data['username']
+    user.avatar = req_data['ava']
+    user.bio = req_data['bio']
+    user.email = req_data['email']
+    user.faceBook = req_data['fb']
+    user.insta = req_data['ig']
+    user.youTube = req_data['yt']
+    db.session.add(user)
+    db.session.commit()
     return user.profile_info()

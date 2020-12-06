@@ -1,4 +1,5 @@
 import React from 'react'
+import { useDispatch } from "react-redux";
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -7,12 +8,14 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles } from '@material-ui/core/styles';
+import { editCurrentProfile, setCurrentProfile } from '../../store/profile'
 
 const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function EditProfileModal({open, handleClose, currentProfile}) {
+export default function EditProfileModal({open, handleClose, currentProfile, currentUserId}) {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const [email, setEmail] = React.useState(currentProfile.email || '');
   const [ava, setAva] = React.useState(currentProfile.avatar || '')
@@ -21,6 +24,7 @@ export default function EditProfileModal({open, handleClose, currentProfile}) {
   const [fb, setFb] = React.useState(currentProfile.facebook || '')
   const [ig, setIg] = React.useState(currentProfile.insta || '')
   const [yt, setYt] = React.useState(currentProfile.youTube || '')
+  const profile = {email, ava, bio, username, fb, ig, yt}
 
   const emailChange = (event) => {
     setEmail(event.target.value)
@@ -43,8 +47,10 @@ export default function EditProfileModal({open, handleClose, currentProfile}) {
   const ytChange = (event) => {
     setYt(event.target.value)
   }
-  const handleSubmit = () => {
-
+  const handleSubmit = async () => {
+    const updatedProfile = await editCurrentProfile(currentUserId, profile)
+    await dispatch(setCurrentProfile(updatedProfile))
+    handleClose()
   }
 
   return (
@@ -121,7 +127,7 @@ export default function EditProfileModal({open, handleClose, currentProfile}) {
           <Button onClick={handleClose} color="secondary">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="secondary">
+          <Button onClick={handleSubmit} color="secondary">
             Submit
           </Button>
         </DialogActions>

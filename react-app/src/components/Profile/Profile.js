@@ -82,7 +82,7 @@ export default function Profile({ currentProfile, currentUserId }) {
 
   return (
     <>
-      <EditProfileModal open={editProfile} handleClose={handleClose} currentProfile={currentProfile}/>
+      <EditProfileModal open={editProfile} handleClose={handleClose} currentProfile={currentProfile} currentUserId={currentUserId}/>
       <Grid item>
         <Grid container wrap='nowrap' spacing={3} alignItems='center'>
           <Grid item>
