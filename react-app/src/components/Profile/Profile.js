@@ -65,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
   },
   divider: {
     backgroundColor: '#243B5E !important',
+    margin: '.5em 0',
   }
 }));
 
@@ -82,7 +83,7 @@ export default function Profile({ currentProfile, currentUserId }) {
 
   return (
     <>
-      <EditProfileModal open={editProfile} handleClose={handleClose} currentProfile={currentProfile} currentUserId={currentUserId}/>
+      <EditProfileModal open={editProfile} handleClose={handleClose} currentProfile={currentProfile} currentUserId={currentUserId} />
       <Grid item>
         <Grid container wrap='nowrap' spacing={3} alignItems='center'>
           <Grid item>
@@ -95,7 +96,7 @@ export default function Profile({ currentProfile, currentUserId }) {
               {currentProfile.username}
             </Typography>
           </Grid>
-          { currentProfile.id === currentUserId ?
+          {currentProfile.id === currentUserId ?
             <Grid item>
               <IconButton onClick={handleClickOpen}><EditIcon /></IconButton>
             </Grid> :
@@ -152,18 +153,18 @@ export default function Profile({ currentProfile, currentUserId }) {
       </Grid>
 
       <Grid item className={classes.routineContainer}>
-        <Typography variant='h3' style={{textAlign: 'center'}}>Routines</Typography>
+        <Typography variant='h3' style={{ textAlign: 'center' }}>Routines</Typography>
         <Divider className={classes.divider} />
-        { currentProfile.id === currentUserId ?
+        {currentProfile.id === currentUserId ?
           currentProfile.routines.map(routine => {
-            return(
-              <RoutineCardContainer key={routine.id} routine={routine} editable={true} />
+            return (
+              <RoutineCardContainer key={routine.id} routine={routine} editable={true} currentUserId={currentUserId} />
             )
           }) :
           currentProfile.routines.map(routine => {
-            if(routine.public){
-              return(
-                <RoutineCardContainer key={routine.id} routine={routine} editable={false} />
+            if (routine.public) {
+              return (
+                <RoutineCardContainer key={routine.id} routine={routine} editable={false} currentUserId={currentUserId} />
               )
             }
           })

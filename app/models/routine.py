@@ -57,4 +57,5 @@ class Routine(db.Model):
       'public': self.public,
       'tags': [tag.to_dict() for tag in self.tags],
       'reported': self.reported,
+      'upvotes': [upvote.to_dict() for upvote in self.upvotes],
     }

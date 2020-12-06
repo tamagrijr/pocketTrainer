@@ -23,7 +23,6 @@ class Upvote(db.Model):
 
   def to_dict(self):
     return {
-      'id': self.id,
       'userId': self.userId,
       'routineId': self.routineId,
       'wokroutId': self.workoutId,
