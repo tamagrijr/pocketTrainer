@@ -89,7 +89,7 @@ export default function Profile({ currentProfile, currentUserId, dispatchProfile
     (async () => {
       dispatchProfile()
     })();
-  }, [handleFollowingClose, handleFollowerClose]);
+  }, [followingList, followerList]);
 
   const following = () => {
     let following = false;

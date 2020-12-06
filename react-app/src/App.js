@@ -8,6 +8,7 @@ import { authenticate } from "./services/auth";
 import LandingContainer from './components/landing/LandingContainer'
 import TopNavContainer from './components/TopNav/TopNavContainer'
 import ProfileContainer from './components/Profile/ProfileContainer'
+import MyWorkoutsContainer from './components/MyWorkouts/MyWorkoutsContainer'
 
 function App() {
   const dispatch = useDispatch();
@@ -48,7 +49,7 @@ function App() {
         </ProtectedRoute>
 
         <ProtectedRoute path='/workouts' exact={true} authenticated={authenticated} >
-          <h1 style={{ textAlign: 'center' }}>My Workouts</h1>
+          <MyWorkoutsContainer />
         </ProtectedRoute>
 
         <ProtectedRoute path='/profile/:userId' exact={true} authenticated={authenticated} >
