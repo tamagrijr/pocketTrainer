@@ -70,7 +70,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Profile({ currentProfile, currentUserId }) {
+
+export default function Profile({ currentProfile, currentUserId, dispatchProfile }) {
   const classes = useStyles();
   const [editProfile, setEditProfile] = React.useState(false);
 
@@ -85,11 +86,32 @@ export default function Profile({ currentProfile, currentUserId }) {
   const following = () => {
     let following = false;
     currentProfile.followers.forEach(follower => {
-      if(follower.id === currentUserId) following = true;
+      if (follower.id === currentUserId) following = true;
     })
     return following
   }
-  console.log(following())
+
+  const handleFollow = async () => {
+    const response = await fetch(`/api/users/follower/${currentUserId}/following/${currentProfile.id}/follow`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      dispatchProfile()
+    }
+  }
+  const handleUnfollow = async () => {
+    const response = await fetch(`/api/users/follower/${currentUserId}/following/${currentProfile.id}/unfollow`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      dispatchProfile()
+    }
+  }
+
   return (
     <>
       <EditProfileModal open={editProfile} handleClose={handleClose} currentProfile={currentProfile} currentUserId={currentUserId} />
@@ -110,8 +132,8 @@ export default function Profile({ currentProfile, currentUserId }) {
               <IconButton onClick={handleClickOpen}><EditIcon /></IconButton>
             </Grid> :
             following() ?
-            <Button size='small' color='secondary'>Unfollow</Button> :
-            <Button size='small' color='primary'>Follow</Button>
+              <Button size='small' color='primary' onClick={handleUnfollow}>Unfollow</Button> :
+              <Button size='small' color='secondary' onClick={handleFollow}>Follow</Button>
           }
         </Grid>
       </Grid>

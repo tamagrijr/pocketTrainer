@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required
-from app.models import User, db
+from app.models import User, Follow, db
 
 user_routes = Blueprint('users', __name__)
 
@@ -41,3 +41,32 @@ def edit_profile(id):
     db.session.add(user)
     db.session.commit()
     return user.profile_info()
+
+
+@user_routes.route('follower/<int:followerId>/following/<int:followingId>/follow')
+# @login_required
+def follow(followerId, followingId):
+    try:
+        checkFollow = Follow.query.filter(Follow.followerId == followerId, Follow.followingId == followingId).one()
+        if checkFollow:
+            return "Already Following"
+    except:
+        follow = Follow(
+            followerId=followerId,
+            followingId=followingId,
+        )
+        db.session.add(follow)
+        db.session.commit()
+        return follow.to_dict()
+
+
+@user_routes.route('follower/<int:followerId>/following/<int:followingId>/unfollow')
+# @login_required
+def unFollow(followerId, followingId):
+    try:
+        follow = Follow.query.filter(Follow.followerId == followerId, Follow.followingId == followingId).one()
+        db.session.delete(follow)
+        db.session.commit()
+        return "Deleted"
+    except:
+        return "Not Following"

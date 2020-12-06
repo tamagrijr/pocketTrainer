@@ -20,13 +20,17 @@ export default function ProfileContainer({ id }) {
 
   const currentUserId = useSelector((state) => state.user.id);
   const currentProfile = useSelector((state) => state.profile);
+  const dispatchProfile = async () => {
+    const currentProfile = await fetchCurrentProfile(currentProfileId)
+    await dispatch(setCurrentProfile(currentProfile))
+  }
 
   if (!currentProfile.username) return null
   return (
     <Grid container justify='center' direction='column'
       wrap='nowrap' alignContent='center' alignItems='center'
       spacing={4} style={{ marginTop: '2em' }}>
-      <Profile currentProfile={currentProfile} currentUserId={currentUserId} />
+      <Profile currentProfile={currentProfile} currentUserId={currentUserId} dispatchProfile={dispatchProfile} />
     </Grid>
   )
 }
