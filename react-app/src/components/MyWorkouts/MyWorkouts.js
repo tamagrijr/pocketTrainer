@@ -11,7 +11,11 @@ const useStyles = makeStyles((theme) => ({
   divider: {
     backgroundColor: '#243B5E !important',
     margin: '.5em 0',
-  }
+  },
+  subDivider: {
+    backgroundColor: '#FFE031 !important',
+    margin: '.5em 0',
+  },
 }));
 
 export default function MyWorkouts({ userWorkouts, currentUserId }) {
@@ -77,7 +81,7 @@ export default function MyWorkouts({ userWorkouts, currentUserId }) {
                 <Button disabled><Typography color='secondary'>{workout.category.name}</Typography></Button>
               </Grid>
             </Grid>
-            <Divider className={classes.divider} />
+            <Divider className={classes.subDivider} />
             <Typography>{workout.description}</Typography>
           </Grid>
         )

@@ -6,9 +6,15 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { makeStyles } from '@material-ui/core/styles';
+import Checkbox from '@material-ui/core/Checkbox';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid'
 
-export default function WorkoutModal({props}) {
+export default function WorkoutModal({ props }) {
+  const handleChange = () => {
+    props.privacy ? props.setPrivacy(false) : props.setPrivacy(true)
+  }
+
   return (
     <div>
       <Dialog open={props.open} onClose={props.handleClose} maxWidth='xs' fullWidth={true} aria-labelledby="edit-workout-form" >
@@ -42,6 +48,14 @@ export default function WorkoutModal({props}) {
             type="email"
             fullWidth
           />
+          <Grid container wrap='nowrap' jusitfy='center' alignItems='center' alignContent='center'>
+            <Grid item>
+              <Typography>Public?</Typography>
+            </Grid>
+            <Grid item>
+              <Checkbox checked={props.privacy} onChange={handleChange} />
+            </Grid>
+          </Grid>
         </DialogContent>
         <DialogActions>
           <Button onClick={props.handleClose} color="secondary">

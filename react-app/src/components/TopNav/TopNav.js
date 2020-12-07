@@ -67,7 +67,7 @@ export default function TopNav({ setAuthenticated }) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="sticky">
         <Toolbar>
           <SideNavContainer setAuthenticated={setAuthenticated} />
           <Typography className={classes.title} variant="h6" noWrap>
