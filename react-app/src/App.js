@@ -39,7 +39,7 @@ function App() {
       <ProtectedRoute path="/" authenticated={authenticated}>
 
         <TopNavContainer setAuthenticated={setAuthenticated} />
-
+        <div className='negativeTopSpace'></div>
         <ProtectedRoute path='/profile' exact={true} authenticated={authenticated} >
           <ProfileContainer id={currentUserId} />
         </ProtectedRoute>

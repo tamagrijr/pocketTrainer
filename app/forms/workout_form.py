@@ -8,4 +8,4 @@ class CreateWorkoutForm(FlaskForm):
     name = StringField('name', validators=[DataRequired()])
     description = StringField('description', validators=[DataRequired()])
     exampleLink = StringField('exampleLink')
-    public = BooleanField('public', validators=[DataRequired()])
+    public = BooleanField('public')

@@ -35,7 +35,14 @@ def categories():
 # @login_required
 def userWorkouts(id):
     userWorkouts = Workout.query.filter(Workout.userId == id).all()
-    return {'userWorkouts': [workout.to_dict() for workout in userWorkouts]}
+    return {'userWorkouts': [workout.to_dict() for workout in userWorkouts if workout.removed == False]}
+
+
+@workout_routes.route('/categories')
+# @login_required
+def workoutCategories():
+  categories = Category.query.all()
+  return [category.to_dict() for category in categories]
 
 
 @workout_routes.route('user/<int:id>/create', methods=['GET', 'POST'])
@@ -87,3 +94,17 @@ def updateWorkout(userId, workoutId):
         return {'errors': validation_errors_to_error_messages(form.errors)}
     except:
         return "Workout Does Not Exist"
+
+
+@workout_routes.route('user/<int:userId>/workout/<int:workoutId>/delete', methods=['GET', 'PUT'])
+# @login_required
+def delete_workout(userId, workoutId):
+  try:
+    workout = Workout.query.get(workoutId)
+    workout.removed=True
+    workout.public=False
+    db.session.add(workout)
+    db.session.commit()
+    return "Successfully Deleted Workout"
+  except:
+    return "Workout Does Not Exists"

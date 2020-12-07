@@ -18,11 +18,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MyWorkouts({ userWorkouts, currentUserId }) {
+export default function MyWorkouts({ userWorkouts, currentUserId, workoutCategories, reDispatch }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [workoutId, setWorkoutId] = React.useState('');
-  const [categoryName, setCategoryName] = React.useState('');
+  const [categoryId, setCategoryId] = React.useState('');
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [exampleLink, setExampleLink] = React.useState('');
@@ -35,7 +35,7 @@ export default function MyWorkouts({ userWorkouts, currentUserId }) {
   const createWorkout = () => {
     setMethod('POST');
     setWorkoutId('')
-    setCategoryName('')
+    setCategoryId('')
     setName('')
     setDescription('')
     setExampleLink('')
@@ -45,19 +45,51 @@ export default function MyWorkouts({ userWorkouts, currentUserId }) {
   const updateWorkout = (workout) => {
     setMethod('PUT');
     setWorkoutId(workout.id)
-    setCategoryName(workout.category.name)
+    setCategoryId(workout.category.id)
     setName(workout.name)
     setDescription(workout.description)
     setExampleLink(workout.exampleLink)
     setPrivacy(workout.public)
     handleOpen();
   }
-  const handleSubmit = () => {
-
+  const handleSubmit = async () => {
+    if (method == 'POST') {
+      const response = await fetch(`api/workouts/user/${currentUserId}/create`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ "name": name, "description": description, "exampleLink": exampleLink, "public": privacy, "categoryId": categoryId }),
+      });
+      if (response.ok) {
+        reDispatch()
+        handleClose()
+      }
+    } else if (method == 'PUT') {
+      const response = await fetch(`api/workouts/user/${currentUserId}/workout/${workoutId}/update`, {
+        method: 'PUT',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ "name": name, "description": description, "exampleLink": exampleLink, "public": privacy, "categoryId": categoryId }),
+      });
+      if (response.ok) {
+        reDispatch()
+        handleClose()
+      }
+    } else {
+      alert('Failed to submit, please try again')
+    }
+  }
+  const handleDelete = async () => {
+    const response = await fetch(`api/workouts/user/${currentUserId}/workout/${workoutId}/delete`, {
+      method: 'PUT',
+        headers: { "Content-Type": "application/json" },
+    });
+    if(response.ok) {
+      reDispatch()
+      handleClose()
+    }
   }
   const modalProps = {
-    method, categoryName, name, description, exampleLink, privacy, open, workoutId, handleClose,
-    setMethod, setCategoryName, setName, setDescription, setExampleLink, setPrivacy, setWorkoutId, handleSubmit
+    method, categoryId, name, description, exampleLink, privacy, open, workoutId, handleClose, workoutCategories,
+    setMethod, setCategoryId, setName, setDescription, setExampleLink, setPrivacy, setWorkoutId, handleSubmit, handleDelete
   }
 
   if (!userWorkouts) return null

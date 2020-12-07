@@ -12,6 +12,7 @@ class Workout(db.Model):
   approved = db.Column(db.Boolean, nullable=False, default=False)
   public = db.Column(db.Boolean, nullable=False, default=False)
   reported = db.Column(db.Boolean, nullable=False, default=False)
+  removed = db.Column(db.Boolean, nullable=False, default=False)
   created_on = db.Column(db.DateTime, server_default=db.func.now())
   updated_on = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
 
