@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
@@ -18,7 +18,7 @@ export default function MyWorkouts({ userWorkouts, currentUserId }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [workoutId, setWorkoutId] = React.useState('');
-  const [categoryId, setCategoryId] = React.useState('');
+  const [categoryName, setCategoryName] = React.useState('');
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [exampleLink, setExampleLink] = React.useState('');
@@ -31,7 +31,7 @@ export default function MyWorkouts({ userWorkouts, currentUserId }) {
   const createWorkout = () => {
     setMethod('POST');
     setWorkoutId('')
-    setCategoryId('')
+    setCategoryName('')
     setName('')
     setDescription('')
     setExampleLink('')
@@ -41,17 +41,25 @@ export default function MyWorkouts({ userWorkouts, currentUserId }) {
   const updateWorkout = (workout) => {
     setMethod('PUT');
     setWorkoutId(workout.id)
-    setCategoryId(workout.category.id)
+    setCategoryName(workout.category.name)
     setName(workout.name)
     setDescription(workout.description)
     setExampleLink(workout.exampleLink)
     setPrivacy(workout.public)
     handleOpen();
   }
+  const handleSubmit = () => {
+
+  }
+  const modalProps = {
+    method, categoryName, name, description, exampleLink, privacy, open, workoutId, handleClose,
+    setMethod, setCategoryName, setName, setDescription, setExampleLink, setPrivacy, setWorkoutId, handleSubmit
+  }
 
   if (!userWorkouts) return null
   return (
     <>
+      <WorkoutModal props={modalProps} />
       <Grid item>
         <Typography variant='h4'>
           My Workouts
@@ -63,13 +71,13 @@ export default function MyWorkouts({ userWorkouts, currentUserId }) {
           <Grid item key={workout.id}>
             <Grid container wrap='nowrap' spacing={3}>
               <Grid item>
-                <Button onClick={() => updateWorkout(workout) }><Typography>{workout.name}</Typography></Button>
+                <Button onClick={() => updateWorkout(workout)}><Typography>{workout.name}</Typography></Button>
               </Grid>
               <Grid item>
-                <Button><Typography color='secondary'>{workout.category.name}</Typography></Button>
+                <Button disabled><Typography color='secondary'>{workout.category.name}</Typography></Button>
               </Grid>
             </Grid>
-            <Divider className={classes.divider}/>
+            <Divider className={classes.divider} />
             <Typography>{workout.description}</Typography>
           </Grid>
         )
