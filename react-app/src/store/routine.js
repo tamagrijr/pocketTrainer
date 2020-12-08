@@ -1,0 +1,28 @@
+export const SET_CURRENT_USER_ROUTINES = 'SET_CURRENT_USER_ROUTINES'
+
+export const setUserRoutines = (routines) => {
+  return { type: SET_CURRENT_USER_ROUTINES, routines };
+};
+
+export const fetchUserRoutines = async (id) => {
+  const response = await fetch(`/api/routines/user/${id}`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const result = await response.json()
+  return result;
+}
+
+export default function reducer(state = {}, action) {
+  switch (action.type) {
+    case SET_CURRENT_USER_ROUTINES: {
+      return {
+        ...state,
+        ...action.routines,
+      };
+    }
+    default:
+      return state;
+  }
+}

@@ -13,6 +13,7 @@ const useStyles = makeStyles({
 
 export default function LandingContainer({ authenticated, setAuthenticated }) {
   const classes = useStyles();
+
   return (
     <Grid container direction='column' alignItems='center' justify='space-between' wrap='nowrap' className={classes.landingGrid}>
       <Landing

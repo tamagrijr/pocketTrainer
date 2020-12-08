@@ -14,18 +14,62 @@ import StarRateIcon from '@material-ui/icons/StarRate';
 const useStyles = makeStyles({
   root: {
     maxWidth: '20em',
-    margin: '1em 0',
+    margin: '.5em 0',
   },
   stared: {
     color: '#FFE031',
   },
 });
 
-export default function RoutineCard({ routine, editable, stared }) {
+export default function RoutineCard({ routine, page, stared, followed, reDispatch, currentUserId }) {
   const classes = useStyles();
+
+  const handleLike = async (routineId) => {
+    const response = await fetch(`/api/routines/user/${currentUserId}/routine/${routineId}/upvote`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      reDispatch()
+    }
+  }
+  const handleFollow = async () => {
+    const response = await fetch(`/api/routines/user/${currentUserId}/routine/${routine.id}/follow`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      reDispatch()
+    }
+  }
 
   return (
     <Card className={classes.root} raised>
+      <CardActions>
+        {page == 'MyRoutines' || page == 'FollowedRoutines' ?
+          <Button color='secondary'>Set Active</Button> :
+          null
+        }
+        {page == 'ActiveRoutine' ?
+          <Button>Set Inactive</Button> :
+          null
+        }
+        {page == 'FollowedRoutines' ?
+          <Button onClick={handleFollow}>Unfollow</Button> :
+          null
+        }
+        {page == 'Profile' ?
+          followed == 'owner' ?
+            null
+            : followed ?
+              <Button onClick={handleFollow}>Unfollow</Button>
+              : <Button onClick={handleFollow} color='secondary'>Follow</Button>
+          : null
+        }
+      </CardActions>
+
       <CardActionArea>
         <CardContent>
           <Grid container wrap='nowrap' justify='space-between' alignItems='center' alignContent='center'>
@@ -34,16 +78,6 @@ export default function RoutineCard({ routine, editable, stared }) {
                 {routine.name}
               </Typography>
             </Grid>
-            <Grid item>
-              <Grid container alignItems='center' alignContent='center'>
-                <Grid item>
-                  {stared ? <StarRateIcon className={classes.stared} /> : <StarRateIcon />}
-                </Grid>
-                <Grid item>
-                  <Typography variant='caption'>{routine.upvotes.length}</Typography>
-                </Grid>
-              </Grid>
-            </Grid>
           </Grid>
           <Typography variant="body2" color="textSecondary" component="p">
             {routine.description}
@@ -51,6 +85,7 @@ export default function RoutineCard({ routine, editable, stared }) {
         </CardContent>
       </CardActionArea>
       <CardActions>
+        <Button onClick={() => handleLike(routine.id)}>{stared ? <StarRateIcon className={classes.stared} /> : <StarRateIcon />}{routine.upvotes.length}</Button>
         {routine.tags.map((tag, i) => {
           return (
             <Button key={`${routine.name} tag ${i}`} size="small" color="secondary">

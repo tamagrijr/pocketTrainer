@@ -210,13 +210,13 @@ export default function Profile({ currentProfile, currentUserId, dispatchProfile
         {currentProfile.id === currentUserId ?
           currentProfile.routines.map(routine => {
             return (
-              <RoutineCardContainer key={routine.id} routine={routine} editable={true} currentUserId={currentUserId} />
+              <RoutineCardContainer key={routine.id} routine={routine} reDispatch={dispatchProfile} page={'Profile'} currentUserId={currentUserId} />
             )
           }) :
           currentProfile.routines.map(routine => {
             if (routine.public) {
               return (
-                <RoutineCardContainer key={routine.id} routine={routine} editable={false} currentUserId={currentUserId} />
+                <RoutineCardContainer key={routine.id} routine={routine} reDispatch={dispatchProfile} page={'Profile'} currentUserId={currentUserId} />
               )
             }
           })

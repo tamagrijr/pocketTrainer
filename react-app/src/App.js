@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from './store/user'
-import {fetchCurrentProfile, setCurrentProfile} from './store/profile'
+import { fetchCurrentProfile, setCurrentProfile } from './store/profile'
 import { BrowserRouter, Route, Redirect } from "react-router-dom";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import { authenticate } from "./services/auth";
@@ -9,6 +9,7 @@ import LandingContainer from './components/landing/LandingContainer'
 import TopNavContainer from './components/TopNav/TopNavContainer'
 import ProfileContainer from './components/Profile/ProfileContainer'
 import MyWorkoutsContainer from './components/MyWorkouts/MyWorkoutsContainer'
+import MyRoutinesContainer from './components/MyRoutines/MyRoutinesContainer'
 
 function App() {
   const dispatch = useDispatch();
@@ -33,19 +34,28 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Route path="/login" exact={true}>
-        <LandingContainer authenticated={authenticated} setAuthenticated={setAuthenticated} />
-      </Route>
+      { authenticated ?
+        <Route path="/login" exact={true}>
+          <Redirect to='/routines'></Redirect>
+        </Route> :
+        <Route path="/login" exact={true}>
+          <LandingContainer authenticated={authenticated} setAuthenticated={setAuthenticated} />
+        </Route>
+      }
+
+
       <ProtectedRoute path="/" authenticated={authenticated}>
 
         <TopNavContainer setAuthenticated={setAuthenticated} />
+        <ProtectedRoute path='/' exact={true}><Redirect to='/routines'></Redirect></ProtectedRoute>
         <div className='negativeTopSpace'></div>
+
         <ProtectedRoute path='/profile' exact={true} authenticated={authenticated} >
           <ProfileContainer id={currentUserId} />
         </ProtectedRoute>
 
         <ProtectedRoute path='/routines' exact={true} authenticated={authenticated} >
-          <h1 style={{ textAlign: 'center' }}>My Routines</h1>
+          <MyRoutinesContainer />
         </ProtectedRoute>
 
         <ProtectedRoute path='/workouts' exact={true} authenticated={authenticated} >
@@ -54,6 +64,10 @@ function App() {
 
         <ProtectedRoute path='/profile/:userId' exact={true} authenticated={authenticated} >
           <ProfileContainer />
+        </ProtectedRoute>
+
+        <ProtectedRoute path='/routines/create' exact={true} authenticated={authenticated} >
+          <h1>CREATE ROUTINE</h1>
         </ProtectedRoute>
 
       </ProtectedRoute>

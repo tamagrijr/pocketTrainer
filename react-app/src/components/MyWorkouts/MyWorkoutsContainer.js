@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserWorkouts, setUserWorkouts, fetchWorkoutCategories, setWorkoutCategories } from '../../store/workout'
-
 import MyWorkouts from './MyWorkouts'
 import Grid from '@material-ui/core/Grid';
 

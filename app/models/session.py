@@ -5,6 +5,7 @@ class Session(db.Model):
 
   id = db.Column(db.Integer, primary_key=True)
   routineId = db.Column(db.Integer, db.ForeignKey('routines.id'), nullable=False)
+  order = db.Column(db.Integer, nullable=False)
   name = db.Column(db.String(255), nullable=False)
   description = db.Column(db.Text, nullable=False)
   created_on = db.Column(db.DateTime, server_default=db.func.now())
