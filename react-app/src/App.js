@@ -34,14 +34,11 @@ function App() {
 
   return (
     <BrowserRouter>
-      { authenticated ?
-        <Route path="/login" exact={true}>
-          <Redirect to='/routines'></Redirect>
-        </Route> :
-        <Route path="/login" exact={true}>
-          <LandingContainer authenticated={authenticated} setAuthenticated={setAuthenticated} />
-        </Route>
-      }
+
+      <Route path="/login" exact={true}>
+        <LandingContainer authenticated={authenticated} setAuthenticated={setAuthenticated} />
+      </Route>
+
 
 
       <ProtectedRoute path="/" authenticated={authenticated}>
