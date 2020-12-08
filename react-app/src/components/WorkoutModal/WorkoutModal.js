@@ -47,6 +47,7 @@ export default function WorkoutModal({ props }) {
               id="demo-simple-select"
               value={props.categoryId}
               onChange={handleSelect}
+              error={!props.categoryId}
             >
               {props.workoutCategories.map(category => {
                 return <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
@@ -61,6 +62,7 @@ export default function WorkoutModal({ props }) {
             value={props.name}
             onChange={(e)=>props.setName(e.target.value)}
             fullWidth
+            error={!props.name}
           />
           <TextField
             color='secondary'
@@ -70,6 +72,7 @@ export default function WorkoutModal({ props }) {
             value={props.description}
             onChange={(e)=>props.setDescription(e.target.value)}
             fullWidth
+            error={!props.description}
           />
           <TextField
             color='secondary'
@@ -78,7 +81,6 @@ export default function WorkoutModal({ props }) {
             label="Example Link"
             value={props.exampleLink}
             onChange={(e)=>props.setExampleLink(e.target.value)}
-            type="email"
             fullWidth
           />
           <Grid container wrap='nowrap' jusitfy='center' alignItems='center' alignContent='center'>
@@ -98,7 +100,7 @@ export default function WorkoutModal({ props }) {
           <Button onClick={props.handleClose} color="secondary">
             Cancel
           </Button>
-          <Button onClick={props.handleSubmit} color="secondary">
+          <Button onClick={props.handleSubmit} disabled={!props.name || !props.description || !props.categoryId} color="secondary">
             Submit
           </Button>
         </DialogActions>

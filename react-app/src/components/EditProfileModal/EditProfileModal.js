@@ -76,6 +76,7 @@ export default function EditProfileModal({open, handleClose, currentProfile, cur
             value={username}
             onChange={usernameChange}
             fullWidth
+            error={!username}
           />
           <TextField
             color='secondary'
@@ -86,6 +87,7 @@ export default function EditProfileModal({open, handleClose, currentProfile, cur
             onChange={emailChange}
             type="email"
             fullWidth
+            error={!email}
           />
           <TextField
             color='secondary'
@@ -128,7 +130,7 @@ export default function EditProfileModal({open, handleClose, currentProfile, cur
           <Button onClick={handleClose} color="secondary">
             Cancel
           </Button>
-          <Button onClick={handleSubmit} color="secondary">
+          <Button onClick={handleSubmit} disabled={!username || !email} color="secondary">
             Submit
           </Button>
         </DialogActions>
