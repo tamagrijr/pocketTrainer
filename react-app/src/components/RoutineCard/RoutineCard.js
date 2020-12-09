@@ -107,7 +107,7 @@ export default function RoutineCard({ routine, page, stared, followed, reDispatc
           : null
         }
       </CardActions>
-
+      {routine.photo_url ? <CardMedia src={routine.photo_url} component="img" height="140" /> : null}
       <CardActionArea onClick={handleActionArea} >
         <CardContent>
           <Grid container wrap='nowrap' justify='space-between' alignItems='center' alignContent='center'>
@@ -122,6 +122,7 @@ export default function RoutineCard({ routine, page, stared, followed, reDispatc
           </Typography>
         </CardContent>
       </CardActionArea>
+
       <CardActions>
         <Button onClick={() => handleLike(routine.id)}>{stared ? <StarRateIcon className={classes.stared} /> : <StarRateIcon />}{routine.upvotes.length}</Button>
         {routine.tags.map((tag, i) => {

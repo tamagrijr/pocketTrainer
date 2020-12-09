@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
 export default function EditProfileModal({open, handleClose, currentProfile, currentUserId}) {
   const dispatch = useDispatch();
   const classes = useStyles();
-  console.log(currentProfile)
   const [email, setEmail] = React.useState(currentProfile.email || '');
   const [ava, setAva] = React.useState(currentProfile.avatar || '')
   const [bio, setBio] = React.useState(currentProfile.bio || '')

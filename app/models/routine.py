@@ -11,6 +11,7 @@ class Routine(db.Model):
   public = db.Column(db.Boolean, nullable=False, default=False)
   reported = db.Column(db.Boolean, nullable=False, default=False)
   removed = db.Column(db.Boolean, nullable=False, default=False)
+  photo_url = db.Column(db.Text)
   created_on = db.Column(db.DateTime, server_default=db.func.now())
   updated_on = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
 
@@ -59,7 +60,8 @@ class Routine(db.Model):
       'tags': [tag.to_dict() for tag in self.tags],
       'reported': self.reported,
       'upvotes': [upvote.to_dict() for upvote in self.upvotes],
-      'userRoutines': [user_routine.short_dict() for user_routine in self.user_routines]
+      'userRoutines': [user_routine.short_dict() for user_routine in self.user_routines],
+      'photo_url': self.photo_url,
     }
 
 

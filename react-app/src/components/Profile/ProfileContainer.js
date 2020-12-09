@@ -20,6 +20,7 @@ export default function ProfileContainer({ id }) {
 
   const currentUserId = useSelector((state) => state.user.id);
   const currentProfile = useSelector((state) => state.profile);
+
   const dispatchProfile = async () => {
     const currentProfile = await fetchCurrentProfile(currentProfileId)
     await dispatch(setCurrentProfile(currentProfile))
