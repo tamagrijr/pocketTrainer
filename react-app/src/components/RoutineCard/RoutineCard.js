@@ -78,7 +78,7 @@ export default function RoutineCard({ routine, page, stared, followed, reDispatc
   }
   const handleActionArea = () => {
     if (page !== 'ActiveRoutine') {
-      let path = `profile`;
+      let path = `routine/${routine.id}`;
       history.push(path);
     }
   }

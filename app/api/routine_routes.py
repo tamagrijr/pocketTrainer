@@ -113,3 +113,13 @@ def deactivate_routine(userId, routineId):
         return "Successful Deactivation"
     except:
         return "Failed To Deactivate"
+
+
+@routine_routes.route('/routine/<int:routineId>/view')
+# @login_required
+def routine_view(routineId):
+    try:
+        routine = Routine.query.get(routineId)
+        return routine.to_dict()
+    except:
+        return "Failed To Load Routine Data"

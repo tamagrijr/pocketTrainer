@@ -43,9 +43,11 @@ class Routine(db.Model):
       'userId': self.userId,
       'name': self.name,
       'description': self.description,
+      'photo_url': self.photo_url,
       'public': self.public,
       'reported': self.reported,
       'tags': [tag.to_dict() for tag in self.tags],
+      'upvotes': [upvote.to_dict() for upvote in self.upvotes],
       'sessions': [session.to_dict() for session in self.sessions]
     }
 

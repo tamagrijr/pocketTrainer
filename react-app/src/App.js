@@ -10,6 +10,7 @@ import TopNavContainer from './components/TopNav/TopNavContainer'
 import ProfileContainer from './components/Profile/ProfileContainer'
 import MyWorkoutsContainer from './components/MyWorkouts/MyWorkoutsContainer'
 import MyRoutinesContainer from './components/MyRoutines/MyRoutinesContainer'
+import RoutineViewContainer from './components/RoutineView/RoutineViewContainer'
 
 function App() {
   const dispatch = useDispatch();
@@ -59,8 +60,8 @@ function App() {
           <MyRoutinesContainer />
         </ProtectedRoute>
 
-        <ProtectedRoute path='/routines/:routineId' exact={true} authenticated={authenticated} >
-
+        <ProtectedRoute path='/routine/:routineId' exact={true} authenticated={authenticated} >
+          <RoutineViewContainer />
         </ProtectedRoute>
 
         <ProtectedRoute path='/routines/create' exact={true} authenticated={authenticated} >
