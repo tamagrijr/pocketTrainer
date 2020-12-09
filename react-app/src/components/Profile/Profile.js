@@ -205,7 +205,7 @@ export default function Profile({ currentProfile, currentUserId, dispatchProfile
       </Grid>
 
       <Grid item className={classes.routineContainer}>
-        <Typography variant='h4' style={{ textAlign: 'center' }}>Routines</Typography>
+        <Typography variant='caption' style={{ color: '#FFE031' }}>Routines</Typography>
         <Divider className={classes.divider} />
         {currentProfile.id === currentUserId ?
           currentProfile.routines.map(routine => {

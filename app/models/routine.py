@@ -10,6 +10,7 @@ class Routine(db.Model):
   description = db.Column(db.Text, nullable=False)
   public = db.Column(db.Boolean, nullable=False, default=False)
   reported = db.Column(db.Boolean, nullable=False, default=False)
+  removed = db.Column(db.Boolean, nullable=False, default=False)
   created_on = db.Column(db.DateTime, server_default=db.func.now())
   updated_on = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
 
@@ -59,4 +60,11 @@ class Routine(db.Model):
       'reported': self.reported,
       'upvotes': [upvote.to_dict() for upvote in self.upvotes],
       'userRoutines': [user_routine.short_dict() for user_routine in self.user_routines]
+    }
+
+
+  def routine_id(self):
+    return {
+      'sessionIds': [session.session_id() for session in self.sessions],
+      'exerciseIds': [session.exercise_ids() for session in self.sessions]
     }

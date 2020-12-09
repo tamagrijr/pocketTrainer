@@ -43,3 +43,7 @@ class Exercise(db.Model):
       'additionalComments': self.additionalComments,
       'workout': self.workout.to_dict()
     }
+
+
+  def exercise_id(self):
+      return self.id

@@ -31,3 +31,11 @@ class Session(db.Model):
       'description': self.description,
       'exercises': [exercise.to_dict() for exercise in self.exercises]
     }
+
+
+  def session_id(self):
+    return self.id
+
+
+  def exercise_ids(self):
+    return [exercise.exercise_id() for exercise in self.exercises]

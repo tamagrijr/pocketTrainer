@@ -44,25 +44,55 @@ export default function RoutineCard({ routine, page, stared, followed, reDispatc
       reDispatch()
     }
   }
+  const handleRemove = async () => {
+    const response = await fetch(`/api/routines/user/${currentUserId}/routine/${routine.id}/remove`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      reDispatch()
+    }
+  }
+  const handleActivate = async () => {
+    const response = await fetch(`/api/routines/user/${currentUserId}/routine/${routine.id}/set_active`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      reDispatch()
+    }
+  }
+  const handleDeactivate = async () => {
+    const response = await fetch(`/api/routines/user/${currentUserId}/routine/${routine.id}/set_inactive`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      reDispatch()
+    }
+  }
 
   return (
     <Card className={classes.root} raised>
       <CardActions>
-        {page == 'MyRoutines' || page == 'FollowedRoutines' ?
-          <Button color='secondary'>Set Active</Button> :
+        {page == 'MyRoutines' ?
+          <><Button color='secondary' onClick={handleActivate} >Set Active</Button> <Button onClick={handleRemove} >Remove</Button></> :
           null
         }
         {page == 'ActiveRoutine' ?
-          <Button>Set Inactive</Button> :
+          <Button onClick={handleDeactivate} >Set Inactive</Button> :
           null
         }
         {page == 'FollowedRoutines' ?
-          <Button onClick={handleFollow}>Unfollow</Button> :
+          <><Button color='secondary' onClick={handleActivate}>Set Active</Button><Button onClick={handleFollow}>Unfollow</Button></> :
           null
         }
         {page == 'Profile' ?
           followed == 'owner' ?
-            null
+            <Button onClick={handleRemove} >Remove</Button>
             : followed ?
               <Button onClick={handleFollow}>Unfollow</Button>
               : <Button onClick={handleFollow} color='secondary'>Follow</Button>

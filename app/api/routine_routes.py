@@ -69,3 +69,47 @@ def follow(userId, routineId):
         db.session.add(user_routine)
         db.session.commit()
         return "Followed"
+
+
+@routine_routes.route('/user/<int:userId>/routine/<int:routineId>/remove')
+# @login_required
+def remove_routine(userId, routineId):
+    try:
+        routine = Routine.query.get(routineId)
+        user_routine = UserRoutine.query.filter(UserRoutine.userId == userId, UserRoutine.routineId == routineId).one()
+        routine.removed = True
+        db.session.delete(user_routine)
+        db.session.commit()
+        return "Routine Removed"
+    except:
+        return "Failed to Remove Routine"
+
+
+@routine_routes.route('/user/<int:userId>/routine/<int:routineId>/set_active')
+# @login_required
+def set_active_routine(userId, routineId):
+    try:
+        try:
+            active_routine = UserRoutine.query.filter(UserRoutine.userId == userId, UserRoutine.active == True).one()
+            active_routine.active = False
+            db.session.commit()
+        except:
+            pass
+        new_active_routine = UserRoutine.query.filter(UserRoutine.userId == userId, UserRoutine.routineId == routineId).one()
+        new_active_routine.active = True
+        db.session.commit()
+        return "Successfully Set Active Routine"
+    except:
+        return "Failed to Activate Routine"
+
+
+@routine_routes.route('/user/<int:userId>/routine/<int:routineId>/set_inactive')
+# @login_required
+def deactivate_routine(userId, routineId):
+    try:
+        active_routine = UserRoutine.query.filter(UserRoutine.userId == userId, UserRoutine.active == True).one()
+        active_routine.active = False
+        db.session.commit()
+        return "Successful Deactivation"
+    except:
+        return "Failed To Deactivate"

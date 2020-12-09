@@ -105,5 +105,5 @@ class User(db.Model, UserMixin):
       'youTube': self.youTube,
       'followers': [follower.followers() for follower in self.followers],
       'following': [following.following() for following in self.following],
-      'routines': [routine.short_dict() for routine in self.routines],
+      'routines': [routine.short_dict() for routine in self.routines if routine.removed == False],
     }
