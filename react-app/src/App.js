@@ -51,20 +51,24 @@ function App() {
           <ProfileContainer id={currentUserId} />
         </ProtectedRoute>
 
-        <ProtectedRoute path='/routines' exact={true} authenticated={authenticated} >
-          <MyRoutinesContainer />
-        </ProtectedRoute>
-
-        <ProtectedRoute path='/workouts' exact={true} authenticated={authenticated} >
-          <MyWorkoutsContainer />
-        </ProtectedRoute>
-
         <ProtectedRoute path='/profile/:userId' exact={true} authenticated={authenticated} >
           <ProfileContainer />
         </ProtectedRoute>
 
+        <ProtectedRoute path='/routines' exact={true} authenticated={authenticated} >
+          <MyRoutinesContainer />
+        </ProtectedRoute>
+
+        <ProtectedRoute path='/routines/:routineId' exact={true} authenticated={authenticated} >
+
+        </ProtectedRoute>
+
         <ProtectedRoute path='/routines/create' exact={true} authenticated={authenticated} >
           <h1>CREATE ROUTINE</h1>
+        </ProtectedRoute>
+
+        <ProtectedRoute path='/workouts' exact={true} authenticated={authenticated} >
+          <MyWorkoutsContainer />
         </ProtectedRoute>
 
       </ProtectedRoute>

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -23,6 +24,7 @@ const useStyles = makeStyles({
 
 export default function RoutineCard({ routine, page, stared, followed, reDispatch, currentUserId }) {
   const classes = useStyles();
+  const history = useHistory();
 
   const handleLike = async (routineId) => {
     const response = await fetch(`/api/routines/user/${currentUserId}/routine/${routineId}/upvote`, {
@@ -74,6 +76,12 @@ export default function RoutineCard({ routine, page, stared, followed, reDispatc
       reDispatch()
     }
   }
+  const handleActionArea = () => {
+    if (page !== 'ActiveRoutine') {
+      let path = `profile`;
+      history.push(path);
+    }
+  }
 
   return (
     <Card className={classes.root} raised>
@@ -100,7 +108,7 @@ export default function RoutineCard({ routine, page, stared, followed, reDispatc
         }
       </CardActions>
 
-      <CardActionArea>
+      <CardActionArea onClick={handleActionArea} >
         <CardContent>
           <Grid container wrap='nowrap' justify='space-between' alignItems='center' alignContent='center'>
             <Grid item>
