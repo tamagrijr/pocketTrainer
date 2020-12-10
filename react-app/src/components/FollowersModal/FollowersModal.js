@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -19,14 +20,21 @@ const useStyles = makeStyles({
 
 export default function FollowersModal({ open, handleClose, followers, title }) {
   const classes = useStyles();
+  const history = useHistory();
+
+  const redirect = (id) => {
+    let path = `/profile/${id}`;
+    history.push(path)
+    handleClose()
+  }
 
   return (
     <Dialog onClose={handleClose} maxWidth='xs' fullWidth={true} aria-labelledby="simple-dialog-title" open={open}>
       <DialogTitle id="follower title">{title}</DialogTitle>
       <List>
         {followers.map((follower) => (
-          <Link key={follower.id} to={`/profile/${follower.id}`} style={{textDecoration: 'none', color: 'white'}} >
-            <ListItem button key={follower.id} onClick={handleClose}>
+          // <Link key={follower.id} to={`/profile/${follower.id}`} style={{textDecoration: 'none', color: 'white'}} >
+            <ListItem button key={follower.id} onClick={() => redirect(follower.id)}>
               <ListItemAvatar>
                 <Avatar aria-label="avatar" className={classes.avatar} src={follower.avatar ? follower.avatar : ""}>
                   {follower.avatar ? "" : follower.username.slice(0, 1)}
@@ -34,7 +42,7 @@ export default function FollowersModal({ open, handleClose, followers, title }) 
               </ListItemAvatar>
               <ListItemText primary={follower.username} />
             </ListItem>
-          </Link>
+          // </Link>
         ))}
       </List>
     </Dialog>

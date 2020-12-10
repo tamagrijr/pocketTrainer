@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import RoutineView from './RoutineView'
 import { fetchRoutineView, setRoutineView } from '../../store/routine'
+import Grid from '@material-ui/core/Grid'
 
 export default function RoutineViewContainer() {
   const dispatch = useDispatch();
@@ -25,6 +26,10 @@ export default function RoutineViewContainer() {
 
   if (!currentRoutine) return null
   return (
-    <RoutineView currentUserId={currentUserId} currentRoutine={currentRoutine} reDispatch={reDispatch} />
+    <Grid container justify='center' direction='column'
+      wrap='nowrap' alignContent='center' alignItems='center'
+      spacing={4} style={{ marginTop: '2em' }}>
+      <RoutineView currentUserId={currentUserId} currentRoutine={currentRoutine} reDispatch={reDispatch} />
+    </Grid>
   )
 }

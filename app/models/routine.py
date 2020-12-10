@@ -48,6 +48,7 @@ class Routine(db.Model):
       'reported': self.reported,
       'tags': [tag.to_dict() for tag in self.tags],
       'upvotes': [upvote.to_dict() for upvote in self.upvotes],
+      'userRoutines': [user_routine.short_dict() for user_routine in self.user_routines],
       'sessions': [session.to_dict() for session in self.sessions]
     }
 
