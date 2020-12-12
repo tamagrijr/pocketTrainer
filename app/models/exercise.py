@@ -6,7 +6,7 @@ class Exercise(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   sessionId = db.Column(db.Integer, db.ForeignKey('sessions.id'), nullable=False)
   workoutId = db.Column(db.Integer, db.ForeignKey('workouts.id'), nullable=False)
-  order = db.Column(db.Integer, nullable=False)
+  order = db.Column(db.Integer)
   sets = db.Column(db.String)
   reps = db.Column(db.String)
   setType = db.Column(db.String)

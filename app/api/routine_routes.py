@@ -55,6 +55,20 @@ def create_routine(userId):
     return routine.to_dict()
 
 
+@routine_routes.route('/user/<int:userId>/routine/<int:routineId>/edit', methods=['GET', 'PUT'])
+# @login_required
+def update_routine(userId, routineId):
+    req_data = request.get_json()
+    routine = Routine.query.get(routineId)
+    routine.name = req_data['name']
+    routine.description = req_data['description']
+    routine.public = req_data['public']
+    routine.photo_url = req_data['photo_url']
+    db.session.add(routine)
+    db.session.commit()
+    return routine.to_dict()
+
+
 @routine_routes.route('/user/<int:userId>/routine/<int:routineId>/upvote')
 # @login_required
 def upvote(userId, routineId):
@@ -72,6 +86,37 @@ def upvote(userId, routineId):
         db.session.add(upvote)
         db.session.commit()
         return "Upvoted"
+
+
+@routine_routes.route('/routine/<int:routineId>/add_session', methods=['GET', 'POST'])
+# @login_required
+def add_session(routineId):
+    req_data = request.get_json()
+    session = Session(name=req_data['name'], description=req_data['description'], routineId=routineId, order=req_data['order'])
+    db.session.add(session)
+    db.session.commit()
+    return session.to_dict()
+
+
+@routine_routes.route('/routine/<int:routineId>/session/<int:sessionId>/edit', methods=['GET', 'PUT'])
+# @login_required
+def edit_session(routineId, sessionId):
+    req_data = request.get_json()
+    session = Session.query.get(sessionId)
+    session.name = req_data['name']
+    session.description = req_data['description']
+    # db.session.add(session)
+    db.session.commit()
+    return session.to_dict()
+
+
+@routine_routes.route('/session/<int:sessionId>/remove')
+# @login_required
+def remove_session(sessionId):
+    session = Session.query.get(sessionId)
+    session.removed = True
+    db.session.commit()
+    return session.to_dict()
 
 
 @routine_routes.route('/user/<int:userId>/routine/<int:routineId>/follow')
@@ -140,8 +185,8 @@ def deactivate_routine(userId, routineId):
 @routine_routes.route('/routine/<int:routineId>/view')
 # @login_required
 def routine_view(routineId):
-    try:
+    # try:
         routine = Routine.query.get(routineId)
         return routine.to_dict()
-    except:
-        return "Failed To Load Routine Data"
+    # except:
+    #     return "Failed To Load Routine Data"

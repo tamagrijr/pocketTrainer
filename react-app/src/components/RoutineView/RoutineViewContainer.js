@@ -28,7 +28,7 @@ export default function RoutineViewContainer() {
   return (
     <Grid container justify='center' direction='column'
       wrap='nowrap' alignContent='center' alignItems='center'
-      spacing={4} style={{ marginTop: '2em' }}>
+      spacing={4} style={{ marginTop: '2em', margin: '0 auto', width: '25em' }}>
       <RoutineView currentUserId={currentUserId} currentRoutine={currentRoutine} reDispatch={reDispatch} />
     </Grid>
   )

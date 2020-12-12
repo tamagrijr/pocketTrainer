@@ -37,6 +37,15 @@ class Routine(db.Model):
   )
 
 
+  def sorted_sessions(self):
+    def get_order(list_item):
+      return list_item.get('order')
+    list = [session.to_dict() for session in self.sessions]
+    list.sort(key=get_order)
+    return list
+
+
+
   def to_dict(self):
     return {
       'id': self.id,
@@ -49,7 +58,7 @@ class Routine(db.Model):
       'tags': [tag.to_dict() for tag in self.tags],
       'upvotes': [upvote.to_dict() for upvote in self.upvotes],
       'userRoutines': [user_routine.short_dict() for user_routine in self.user_routines],
-      'sessions': [session.to_dict() for session in self.sessions]
+      'sessions': self.sorted_sessions()
     }
 
 

@@ -32,46 +32,41 @@ export default function WorkoutModal({ props }) {
 
   const [name, setName] = React.useState(props.name || '');
   const [description, setDescription] = React.useState(props.description || '');
-  const [photo, setPhoto] = React.useState(props.photo || '');
-  const [privacy, setPrivacy] = React.useState(false);
 
-  const handleChange = () => {
-    privacy ? setPrivacy(false) : setPrivacy(true)
-  }
   const handleSubmit = async () => {
     if (props.method == 'PUT') {
-      const putResponse = await fetch(`/api/routines/user/${props.currentUserId}/routine/${props.routineId}/edit`, {
+      const putResponse = await fetch(`/api/routines/routine/${props.routineId}/session/${props.sessionId}/edit`, {
         method: 'PUT',
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ "name": name, "description": description, "public": privacy, "photo_url": photo }),
+        body: JSON.stringify({ name: props.name, description: props.description }),
       });
       if (putResponse.ok) {
         props.reDispatch()
         props.handleClose()
       }
-      return
+    } else if (props.method == 'POST') {
+      const postResponse = await fetch(`/api/routines/routine/${props.routineId}/add_session`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: props.name, description: props.description, order: props.length + 1 }),
+      });
+      if (postResponse.ok) {
+        props.reDispatch()
+        props.handleClose()
+      }
     }
-    const response = await fetch(`/api/routines/user/${props.currentUserId}/create`, {
-      method: 'POST',
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ "name": name, "description": description, "public": privacy, "photo_url": photo }),
-    });
-    if (response.ok) {
-      const routine = await response.json()
-      let path = `/routine/${routine.id}`;
-      history.push(path);
-    }
+    return
   }
 
   const remove = async () => {
-    const response = await fetch(`/api/routines/user/${props.currentUserId}/routine/${props.routineId}/remove`, {
+    const response = await fetch(`/api/routines/session/${props.sessionId}/remove`, {
       headers: {
         "Content-Type": "application/json",
       },
     });
     if (response.ok) {
-      let path = `/routines`
-      history.push(path)
+      props.reDispatch()
+      props.handleClose()
     }
   }
 
@@ -87,38 +82,21 @@ export default function WorkoutModal({ props }) {
             margin="dense"
             id="name"
             label="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={props.name}
+            onChange={(e) => props.setName(e.target.value)}
             fullWidth
-            error={!name}
+            error={!props.name}
           />
           <TextField
             color='secondary'
             margin="dense"
             id="Descrtiption"
             label="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            value={props.description}
+            onChange={(e) => props.setDescription(e.target.value)}
             fullWidth
-            error={!description}
+            error={!props.description}
           />
-          <TextField
-            color='secondary'
-            margin="dense"
-            id="routinePhoto"
-            label="Routine Photo"
-            value={photo}
-            onChange={(e) => setPhoto(e.target.value)}
-            fullWidth
-          />
-          <Grid container wrap='nowrap' jusitfy='center' alignItems='center' alignContent='center'>
-            <Grid item>
-              <Typography>Public?</Typography>
-            </Grid>
-            <Grid item>
-              <Checkbox checked={privacy} onChange={handleChange} />
-            </Grid>
-          </Grid>
         </DialogContent>
         <DialogActions>
           {props.method == 'PUT' ?
@@ -128,7 +106,7 @@ export default function WorkoutModal({ props }) {
           <Button onClick={props.handleClose} color="secondary">
             Cancel
           </Button>
-          <Button onClick={handleSubmit} disabled={!name || !description} color="secondary">
+          <Button onClick={handleSubmit} disabled={!props.name || !props.description} color="secondary">
             Submit
           </Button>
         </DialogActions>

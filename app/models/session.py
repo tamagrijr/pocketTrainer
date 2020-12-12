@@ -5,9 +5,10 @@ class Session(db.Model):
 
   id = db.Column(db.Integer, primary_key=True)
   routineId = db.Column(db.Integer, db.ForeignKey('routines.id'), nullable=False)
-  order = db.Column(db.Integer, nullable=False)
+  order = db.Column(db.Integer)
   name = db.Column(db.String(255), nullable=False)
   description = db.Column(db.Text, nullable=False)
+  removed = db.Column(db.Boolean, nullable=False, default=False)
   created_on = db.Column(db.DateTime, server_default=db.func.now())
   updated_on = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
 
@@ -29,6 +30,8 @@ class Session(db.Model):
       'routineId': self.routineId,
       'name': self.name,
       'description': self.description,
+      'order': self.order,
+      'removed': self.removed,
       'exercises': [exercise.to_dict() for exercise in self.exercises]
     }
 
