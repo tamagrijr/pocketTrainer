@@ -28,8 +28,11 @@ const useStyles = makeStyles((theme) => ({
 export default function RoutineView({ currentUserId, currentRoutine, reDispatch }) {
   const classes = useStyles();
 
+  const editable = currentUserId === currentRoutine.userId
+
   return (
     <>
+      {editable ? <h1>Editable</h1> : <h1>NotEditable</h1>}
       <Grid item>
         <Typography variant='h4' className={classes.routineName}>{currentRoutine.name}</Typography>
         <Divider className={classes.divider} />

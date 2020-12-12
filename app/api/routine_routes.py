@@ -33,6 +33,28 @@ def userRoutines(id):
     }
 
 
+@routine_routes.route('/user/<int:userId>/create', methods=['GET', 'POST'])
+# @login_required
+def create_routine(userId):
+    req_data = request.get_json()
+    routine = Routine(
+        userId=userId,
+        name=req_data['name'],
+        description=req_data['description'],
+        public=req_data['public'],
+        photo_url=req_data['photo_url']
+    )
+    db.session.add(routine)
+    db.session.commit()
+    user_routine = UserRoutine(
+        userId=userId,
+        routineId=routine.to_dict()['id']
+    )
+    db.session.add(user_routine)
+    db.session.commit()
+    return routine.to_dict()
+
+
 @routine_routes.route('/user/<int:userId>/routine/<int:routineId>/upvote')
 # @login_required
 def upvote(userId, routineId):

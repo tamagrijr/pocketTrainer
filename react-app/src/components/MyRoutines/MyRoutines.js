@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import RoutineCardContainer from '../RoutineCard/RoutineCardContainer'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Button from '@material-ui/core/Button'
+import RoutineModal from '../RoutineModal/RoutineModal'
 
 const useStyles = makeStyles((theme) => ({
   divider: {
@@ -21,11 +22,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MyRoutines({ currentUserId, userRoutines, reDispatch }) {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = () => setOpen(false);
 
   if (!userRoutines) return null;
   return (
     <>
-      <Grid item>
+      <RoutineModal props={{open, handleClose, currentUserId}} />
+      {/* <Grid item>
         <Typography variant='h4'>
           Active Routine
         </Typography>
@@ -37,7 +42,7 @@ export default function MyRoutines({ currentUserId, userRoutines, reDispatch }) 
             <RoutineCardContainer key={routine.id} routine={routine.routine} page={'ActiveRoutine'} reDispatch={reDispatch} currentUserId={currentUserId} /> :
             null
         })}
-      </Grid>
+      </Grid> */}
 
       <Grid item>
         <Typography variant='h5'>
@@ -53,12 +58,12 @@ export default function MyRoutines({ currentUserId, userRoutines, reDispatch }) 
         })}
       </Grid>
       <Grid item>
-        <Link to={`/routines/create`} style={{ textDecoration: 'none', color: 'white' }} >
-          <Button>
+        {/* <Link to={`/routines/create`} style={{ textDecoration: 'none', color: 'white' }} > */}
+          <Button onClick={() => setOpen(true)}>
             <Typography>Create Routine</Typography>
             <AddCircleIcon color='secondary' style={{ marginLeft: '1em' }} />
           </Button>
-        </Link>
+        {/* </Link> */}
       </Grid>
 
       <Grid item>

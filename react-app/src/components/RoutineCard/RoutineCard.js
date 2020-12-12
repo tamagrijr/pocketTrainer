@@ -87,15 +87,21 @@ export default function RoutineCard({ routine, page, stared, followed, reDispatc
     <Card className={classes.root} raised>
       <CardActions>
         {page == 'MyRoutines' ?
-          <><Button color='secondary' onClick={handleActivate} >Set Active</Button> <Button onClick={handleRemove} >Remove</Button></> :
+          <>
+            {/* <Button color='secondary' onClick={handleActivate} >Set Active</Button> */}
+            <Button onClick={handleRemove} >Remove</Button>
+          </> :
           null
         }
-        {page == 'ActiveRoutine' ?
+        {/* {page == 'ActiveRoutine' ?
           <Button onClick={handleDeactivate} >Set Inactive</Button> :
           null
-        }
+        } */}
         {page == 'FollowedRoutines' ?
-          <><Button color='secondary' onClick={handleActivate}>Set Active</Button><Button onClick={handleFollow}>Unfollow</Button></> :
+          <>
+            {/* <Button color='secondary' onClick={handleActivate}>Set Active</Button> */}
+            <Button onClick={handleFollow}>Unfollow</Button>
+          </> :
           null
         }
         {page == 'Profile' ?
