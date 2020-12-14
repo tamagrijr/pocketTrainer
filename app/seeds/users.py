@@ -3,9 +3,14 @@ from app.models import db, User
 
 # Adds a demo user, you can add other users here if you want
 def seed_users():
-    pocket = User(username='Pocket Trainer', email='pocket@aa.io', password='password')
-    warren = User(username='Warren', email='warren@aa.io', password='password')
-    demo = User(username='Demo', email='demo@aa.io', password='password')
+    pocket = User(username='Pocket Trainer', email='pocket@aa.io', password='password', avatar='https://i.imgur.com/3DS8gg1.png',
+    bio='Pocket Trainer is dedicated to helping you train yourself as well as you train your Pokémon')
+    warren = User(username='Warren', email='warren@aa.io', password='password', avatar='https://i.imgur.com/97eHz4V.gif', bio='Yo, I made this. With a lotta help from my classmates.')
+    demo = User(
+        username='Demo', email='demo@aa.io', password='password', avatar='''https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.5AC1heOgalAvv5HoQ1m_WQHaHa%26pid%3DApi&f=1''',
+        faceBook='''http://www.facebook.com''', bio='Thank you for trying out Pocket Trainer I hope you have fun messing with the workout routines!',
+        insta='http://www.instagram.com', youTube='http://www.youtube.com',
+    )
     gabe = User(username='Gabe', email='gabe@aa.io', password='password')
     mark = User(username='Mark', email='mark@aa.io', password='password')
     cole = User(username='Cole', email='cole@aa.io', password='password')
