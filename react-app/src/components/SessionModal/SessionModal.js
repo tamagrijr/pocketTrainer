@@ -26,12 +26,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function WorkoutModal({ props }) {
+export default function SessionModal({ props }) {
   const classes = useStyles();
-  const history = useHistory();
-
-  const [name, setName] = React.useState(props.name || '');
-  const [description, setDescription] = React.useState(props.description || '');
 
   const handleSubmit = async () => {
     if (props.method == 'PUT') {
@@ -74,7 +70,7 @@ export default function WorkoutModal({ props }) {
     <div>
       <Dialog open={props.open} onClose={props.handleClose} maxWidth='xs' fullWidth={true} aria-labelledby="edit-workout-form" >
         <DialogTitle id="form-dialog-title" style={{ textAlign: 'center' }}>
-          Create Your New Routine
+          {props.method == 'POST' ? 'Create your session' : 'Edit your session'}
         </DialogTitle>
         <DialogContent>
           <TextField

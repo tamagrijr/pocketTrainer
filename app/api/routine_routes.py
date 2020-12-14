@@ -190,3 +190,45 @@ def routine_view(routineId):
         return routine.to_dict()
     # except:
     #     return "Failed To Load Routine Data"
+
+
+@routine_routes.route('/session/<int:sessionId>/exercise/create', methods=['GET', 'POST'])
+# @login_required
+def add_exercise(sessionId):
+    req_data = request.get_json()
+    exercise = Exercise(
+        sessionId=sessionId,
+        workoutId=req_data['workoutId'],
+        order=req_data['order'],
+        setType=req_data['setType'],
+        sets=req_data['sets'],
+        reps=req_data['reps'],
+        additionalComments=req_data['additionalComments'],
+    )
+    db.session.add(exercise)
+    db.session.commit()
+    return exercise.to_dict()
+
+
+@routine_routes.route('/session/<int:sessionId>/exercise/<int:exerciseId>/edit', methods=['GET', 'PUT'])
+# @login_required
+def edit_exercise(sessionId, exerciseId):
+    exercise = Exercise.query.get(exerciseId)
+    req_data = request.get_json()
+    exercise.workoutId=req_data['workoutId'],
+    exercise.setType=req_data['setType'],
+    exercise.sets=req_data['sets'],
+    exercise.reps=req_data['reps'],
+    exercise.additionalComments=req_data['additionalComments'],
+    # db.session.add(exercise)
+    db.session.commit()
+    return exercise.to_dict()
+
+
+@routine_routes.route('/exercise/<int:exerciseId>/remove')
+# @login_required
+def remove_exercise(exerciseId):
+    exercise = Exercise.query.get(exerciseId)
+    exercise.removed = True
+    db.session.commit()
+    return exercise.to_dict()

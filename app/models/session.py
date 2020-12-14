@@ -24,6 +24,14 @@ class Session(db.Model):
   )
 
 
+  def sorted_exercises(self):
+    def get_order(list_item):
+      return list_item.get('order')
+    list = [exercise.to_dict() for exercise in self.exercises]
+    list.sort(key=get_order)
+    return list
+
+
   def to_dict(self):
     return {
       'id': self.id,
@@ -32,7 +40,7 @@ class Session(db.Model):
       'description': self.description,
       'order': self.order,
       'removed': self.removed,
-      'exercises': [exercise.to_dict() for exercise in self.exercises]
+      'exercises': self.sorted_exercises()
     }
 
 

@@ -14,6 +14,7 @@ class Exercise(db.Model):
   rest = db.Column(db.String)
   time = db.Column(db.String)
   additionalComments = db.Column(db.Text)
+  removed = db.Column(db.Boolean, nullable=False, default=False)
   created_on = db.Column(db.DateTime, server_default=db.func.now())
   updated_on = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
 
@@ -32,6 +33,7 @@ class Exercise(db.Model):
   def to_dict(self):
     return {
       'id': self.id,
+      'order': self.order,
       'sessionId': self.sessionId,
       'workoutId': self.workoutId,
       'sets': self.sets,
@@ -41,7 +43,8 @@ class Exercise(db.Model):
       'rest': self.rest,
       'time': self.time,
       'additionalComments': self.additionalComments,
-      'workout': self.workout.to_dict()
+      'workout': self.workout.to_dict(),
+      'removed': self.removed,
     }
 
 

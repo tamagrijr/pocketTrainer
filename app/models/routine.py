@@ -50,6 +50,7 @@ class Routine(db.Model):
     return {
       'id': self.id,
       'userId': self.userId,
+      'user': self.user.profile_info(),
       'name': self.name,
       'description': self.description,
       'photo_url': self.photo_url,

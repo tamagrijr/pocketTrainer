@@ -38,6 +38,13 @@ def userWorkouts(id):
     return {'userWorkouts': [workout.to_dict() for workout in userWorkouts if workout.removed == False]}
 
 
+@workout_routes.route('/approved')
+# @login_required
+def approved_workoutes():
+    approved_workoutes = Workout.query.filter(Workout.approved == True).all()
+    return {'approvedWorkouts': [workout.to_dict() for workout in approved_workoutes if workout.removed == False]}
+
+
 @workout_routes.route('/categories')
 # @login_required
 def workoutCategories():
