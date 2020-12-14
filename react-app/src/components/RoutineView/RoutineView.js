@@ -203,7 +203,7 @@ export default function RoutineView({ currentUserId, currentRoutine, reDispatch 
       </Grid>
 
       <Grid item >
-        <Typography variant='h4' className={editable ? classes.editableRoutineName : classes.routineName} onClick={editable ? () => setOpen(true) : () => { }}>{currentRoutine.name}</Typography>
+        <Typography variant='h4' className={editable ? classes.editableRoutineName : classes.routineName} onClick={editable ? () => {reDispatch(); setOpen(true);} : () => { }}>{currentRoutine.name}</Typography>
       </Grid>
       <Grid item>
         {currentRoutine.user.id === currentUserId ?
@@ -222,12 +222,12 @@ export default function RoutineView({ currentUserId, currentRoutine, reDispatch 
 
       {currentRoutine.sessions.map((session) => {
         if (session.removed) {
-          return <></>
+          return null
         }
         else {
           return (
-            <>
-              <Grid item key={session.id} style={{ width: '80%' }}>
+            <React.Fragment key={session.id}>
+              <Grid item style={{ width: '80%' }}>
                 < Typography variant='h5'
                   className={editable ? classes.editableSessionName : classes.sessionName}
                   onClick={editable ? () => handleSessionEdit(session.id, session.name, session.description) : () => { }}>
@@ -238,10 +238,10 @@ export default function RoutineView({ currentUserId, currentRoutine, reDispatch 
               </Grid>
                 {session.exercises.map(exercise => {
                   if (exercise.removed) {
-                    return <></>
+                    return null
                   } else {
                     return (
-                      <Grid item>
+                      <Grid item key={exercise.id}>
                         <ExerciseCardContiner exercise={exercise} editable={editable} handleExerciseEdit={() => handleExerciseEdit(session, exercise)} />
                       </Grid>
                     )
@@ -261,7 +261,7 @@ export default function RoutineView({ currentUserId, currentRoutine, reDispatch 
                 </Grid> :
                 null
               }
-            </>
+            </React.Fragment>
           )
         }
       })}
