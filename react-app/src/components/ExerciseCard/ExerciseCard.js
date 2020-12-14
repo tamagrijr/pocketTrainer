@@ -35,6 +35,12 @@ export default function ExerciseCard({ exercise, editable, handleExerciseEdit })
   const classes = useStyles();
   return (
     <Card className={classes.root} raised>
+      {exercise.workout.exampleLink ?
+        <CardActions>
+          <a href={exercise.workout.exampleLink} target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none', color: '#FFE301'}}><Typography>Example Link</Typography></a>
+        </CardActions>
+      : null
+      }
       <CardContent className={editable ? classes.active : classes.inactive} onClick={editable ? handleExerciseEdit : () => { }} >
         <Grid container wrap='nowrap' justify='space-between' alignItems='center' alignContent='center'>
           <Grid item>

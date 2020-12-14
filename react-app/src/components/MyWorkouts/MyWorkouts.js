@@ -115,6 +115,11 @@ export default function MyWorkouts({ userWorkouts, currentUserId, workoutCategor
             </Grid>
             <Divider className={classes.subDivider} />
             <Typography>{workout.description}</Typography>
+
+            {workout.exampleLink
+            ? <a href={workout.exampleLink} target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none', color: '#FFE301', textAlign: 'center'}}><Typography>Example Link</Typography></a>
+            : null}
+
           </Grid>
         )
       })}
